@@ -1,3 +1,5 @@
+'use strict'
+
 const cheerio = require('cheerio')
 
 function replaceHtml(htmlString, hashObject) {
@@ -7,16 +9,16 @@ function replaceHtml(htmlString, hashObject) {
   function replaceSrc(file) {
     let $elemArray = $(`[src="${file}"]`)
     
-    $elemArray.forEach(elem => {
-      elem.removeAttr('src')
-      elem.addClass(hashObject[file])
+    $elemArray.each((index, elem) => {
+      $(elem).removeAttr('src')
+      $(elem).addClass(hashObject[file])
     })
     
     $elemArray = $(`[src='${file}']`)
     
-    $elemArray.forEach(elem => {
-      elem.removeAttr('src')
-      elem.addClass(hashObject[file])
+    $elemArray.each((index, elem) => {
+      $(elem).removeAttr('src')
+      $(elem).addClass(hashObject[file])
     })
   }
   
