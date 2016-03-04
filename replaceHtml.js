@@ -1,24 +1,28 @@
+const cheerio = require('cheerio')
+
 function replaceHtml(htmlString, hashObject) {
   const filesArray = Object.keys(hashObject)
-  let newHtmlString = htmlString
+  const $ = cheerio.load(htmlString)
   
   function replaceSrc(file) {
-    const srcAttributeDblQuote = `src="${file}"`
-    const srcAttributeSingQuote = `src='${file}'`
-    const hash = hashObject[file]
-    const classAttribute = `class='${hash}'`
+    let $elemArray = $(`[src="${file}"]`)
     
-    while (newHtmlString.includes(srcAttributeDblQuote)) {
-      newHtmlString = newHtmlString.replace(srcAttributeDblQuote, classAttribute)  
-    }
-    while (newHtmlString.includes(srcAttributeSingQuote)) {
-      newHtmlString = newHtmlString.replace(srcAttributeSingQuote, classAttribute)  
-    }
+    $elemArray.forEach(elem => {
+      elem.removeAttr('src')
+      elem.addClass(hashObject[file])
+    })
+    
+    $elemArray = $(`[src='${file}']`)
+    
+    $elemArray.forEach(elem => {
+      elem.removeAttr('src')
+      elem.addClass(hashObject[file])
+    })
   }
   
   filesArray.forEach(replaceSrc)
   
-  return newHtmlString  
+  return $.html()  
 }
 
 module.exports = replaceHtml
