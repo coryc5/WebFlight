@@ -2,8 +2,7 @@
 'use strict'
 const assert = require('assert')
 const path = require('path')
-const makeArrayOfContents = require('../lib/makeArrayOfContents')
-const htmlToString = require('../lib/htmlToString')
+const htmlToString = require('../lib/stringifyFile')
 
 const testHtml =
 '<!DOCTYPE> \
