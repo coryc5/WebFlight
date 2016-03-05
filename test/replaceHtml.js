@@ -11,5 +11,5 @@ var hashObj = {
 describe('replaceHtml', function() {
   it('should replace src attribute with class attribute', function() {
     assert.equal(replacedHtml, replaceHtml(html, hashObj))
-  })  
+  })
 })
