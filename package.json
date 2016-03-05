@@ -1,12 +1,15 @@
 {
   "name": "webflight",
   "version": "1.0.0",
-  "description": "",
+  "description": "Turns a server into a seed for peer-to-peer content delivery",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "standard && mocha test/test.js",
     "start": "nodemon server.js"
   },
+  "standard": {
+      "parser": "babel-eslint"
+    },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Team-Webflight/WebFlight.git"
@@ -17,6 +20,8 @@
     "url": "https://github.com/tbywong/WebFlight/issues"
   },
   "dependencies": {
+    "babel-eslint": "^5.0.0",
+    "cheerio": "^0.20.0",
     "electron-spawn": "^4.1.1",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1",
