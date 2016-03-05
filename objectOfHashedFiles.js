@@ -30,7 +30,7 @@ function arrayOfImages(array){
   console.log('is the imageobj populated?', hashedImgObj)
 }
 
-arrayOfImages([tea,pizza]);
+//arrayOfImages([tea,pizza]);
 
 
 
