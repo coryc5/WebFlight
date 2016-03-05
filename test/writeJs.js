@@ -12,14 +12,14 @@ describe('writeJs', () => {
 
     createHashObj(filesArray).then(hashObj => {
       fs.mkdir(__dirname + '/wf', err => {
-        writeJs(hashObj, __dirname + '/wf/webflight.js')
-        
-        const wroteJs = fs.statSync(__dirname + '/wf/webflight.js').isFile()
-        
-        fs.unlink(__dirname + '/wf/webflight.js', err => {
-          fs.rmdir(__dirname + '/wf', err => {
-            assert.equal(wroteJs, true)
-            done()
+        writeJs(hashObj, __dirname + '/wf/webflight.js').then(result => {
+          const wroteJs = fs.statSync(__dirname + '/wf/webflight.js').isFile()
+          
+          fs.unlink(__dirname + '/wf/webflight.js', err => {
+            fs.rmdir(__dirname + '/wf', err => {
+              assert.equal(wroteJs, true)
+              done()
+            })
           })
         })
       })
