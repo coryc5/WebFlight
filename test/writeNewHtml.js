@@ -1,5 +1,5 @@
-var assert = require('assert')
 var fs = require('fs')
+var assert = require('assert')
 var writeNewHtml = require('./../writeNewHtml')
 
 describe('writeNewHtml', () => {
@@ -14,6 +14,7 @@ describe('writeNewHtml', () => {
     fs.mkdir(__dirname + '/wf', err => {
       writeNewHtml(html, 'test/wf/index');
       var wroteHtml = fs.statSync(__dirname + '/wf/index.html').isFile()
+      
       fs.unlink(__dirname + '/wf/index.html', err => {
         fs.rmdir(__dirname + '/wf', err => {
           assert.equal(true, wroteHtml)

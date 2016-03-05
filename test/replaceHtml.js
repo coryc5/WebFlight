@@ -1,5 +1,5 @@
-var assert = require('assert')
 var fs = require('fs')
+var assert = require('assert')
 var replaceHtml = require('../lib/replaceHtml')
 
 var html = fs.readFileSync(__dirname + '/replaceHtml/index.html', 'utf8')

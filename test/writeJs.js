@@ -1,14 +1,14 @@
 'use strict'
 
-const assert = require('assert')
 const fs = require('fs')
+const assert = require('assert')
 const writeJs = require('../lib/writeJs')
-const makeFilesArray = require('../lib/makeFilesArray')
+const makeFilesObj = require('../lib/makeFilesObj')
 const createHashObj = require('../lib/createHashObj')
 
 describe('writeJs', () => {
   it('should write js file to wf/', done => {
-    const filesArray = makeFilesArray(__dirname)
+    const filesArray = makeFilesObj(__dirname)
 
     createHashObj(filesArray).then(hashObj => {
       fs.mkdir(__dirname + '/wf', err => {

@@ -1,8 +1,8 @@
 /* global describe, it */
 'use strict'
 
-const assert = require('assert')
 const path = require('path')
+const assert = require('assert')
 const stringifyHtml = require('../lib/stringifyHtml')
 
 const testHtml =

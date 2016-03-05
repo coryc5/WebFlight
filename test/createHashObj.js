@@ -3,13 +3,13 @@
 
 const assert = require('assert')
 const path = require('path')
-const makeFilesArray = require('../lib/makeFilesArray')
+const makeFilesObj = require('../lib/makeFilesObj')
 const createHashObj = require('../lib/createHashObj')
 
 // createHashObj
 describe('createHashObj', function () {
   it('should return hash object of createHashObj/images folder', function (done) {
-    const filesArray = makeFilesArray(path.join(__dirname + '/createHashObj/images'))
+    const filesArray = makeFilesObj(path.join(__dirname + '/createHashObj/images'))
     const correctObj = {}
     const file1 = `${__dirname}/createHashObj/images/pizza.png`
     const file2 = `${__dirname}/createHashObj/images/hello.js`
