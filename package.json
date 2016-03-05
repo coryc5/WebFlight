@@ -1,30 +1,33 @@
 {
-  "name": "webflight",
-  "version": "1.0.0",
-  "description": "Turns a server into a seed for peer-to-peer content delivery",
-  "main": "index.js",
-  "scripts": {
-    "test": "standard && mocha test/test.js",
-    "start": "nodemon server.js"
-  },
-  "standard": {
-      "parser": "babel-eslint"
-    },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Team-Webflight/WebFlight.git"
-  },
-  "author": "Carol, Cory, Jared, Tiffany",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tbywong/WebFlight/issues"
-  },
-  "dependencies": {
-    "babel-eslint": "^5.0.0",
-    "cheerio": "^0.20.0",
-    "electron-spawn": "^4.1.1",
-    "mocha": "^2.4.5",
-    "nodemon": "^1.9.1",
-    "sha1": "^1.1.1"
-  }
+	"name": "webflight",
+	"version": "1.0.0",
+	"description": "Turns a server into a seed for peer-to-peer content delivery",
+	"main": "index.js",
+	"scripts": {
+		"test": "standard && mocha test/test.js",
+		"start": "nodemon server.js"
+	},
+	"standard": {
+			"parser": "babel-eslint"
+		},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Team-Webflight/WebFlight.git"
+	},
+	"author": "Carol, Cory, Jared, Tiffany",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Team-WebFlight/WebFlight/issues"
+	},
+	"dependencies": {
+		"babel-eslint": "^5.0.0",
+		"cheerio": "^0.20.0",
+		"electron-spawn": "^4.1.1",
+		"mocha": "^2.4.5",
+		"nodemon": "^1.9.1",
+		"sha1": "^1.1.1",
+		"jquery": "^2.2.1",
+		"casperjs": "^1.1.0-beta5",
+		"webtorrent": "^0.82.1"
+	}
 }
