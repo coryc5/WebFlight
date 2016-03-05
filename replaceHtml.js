@@ -24,6 +24,9 @@ function replaceHtml(htmlString, hashObject) {
   
   filesArray.forEach(replaceSrc)
   
+  $('body').append('<script src="https://cdn.jsdelivr.net/webtorrent/latest/webtorrent.min.js"></script>')
+  $('body').append('<script src="webflight.js"></script>')
+  
   return $.html()  
 }
 
