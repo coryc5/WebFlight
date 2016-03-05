@@ -1,6 +1,6 @@
 var assert = require('assert')
 var fs = require('fs')
-var replaceHtml = require('./../replaceHtml')
+var replaceHtml = require('../lib/replaceHtml')
 
 var html = fs.readFileSync(__dirname + '/replaceHtml/index.html', 'utf8')
 var replacedHtml = fs.readFileSync(__dirname + '/replaceHtml/index2.html', 'utf8')
@@ -9,7 +9,10 @@ var hashObj = {
 }
 
 describe('replaceHtml', function() {
-  it('should replace src attribute with class attribute', function() {
-    assert.equal(replacedHtml, replaceHtml(html, hashObj))
+  it('should replace src attribute with class attribute', function(done) {
+    replaceHtml(html, hashObj).then(results => {
+      assert.equal(replacedHtml, results)
+      done()
+    })
   })
 })
