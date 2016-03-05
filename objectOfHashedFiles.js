@@ -37,7 +37,6 @@ function arrayOfImages(array){
 
 
 function imageHashing(image){
-  // new Promise(resolve,reject){
     var data = fs.readFileSync(image)
     //console.log(data);
     //applying SHA1 to image file
