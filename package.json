@@ -9,8 +9,7 @@
   },
   "standard": {
       "parser": "babel-eslint"
-    }
-  },
+    },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Team-Webflight/WebFlight.git"
