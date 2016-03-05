@@ -20,7 +20,7 @@ describe('createHashObj', function () {
     correctObj[file3] = 'ab1529688e340a855ec85a3d3b5dbf5ec1ea8707' 
     
     
-    createHashObj(filesArray, results => {
+    createHashObj(filesArray).then(results => {
       assert.deepEqual(results, correctObj)
       done()
     })
