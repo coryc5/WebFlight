@@ -4,23 +4,19 @@ const fs = require('fs')
 const assert = require('assert')
 const writeJs = require('../lib/writeJs')
 const makeFilesObj = require('../lib/makeFilesObj')
-const createHashObj = require('../lib/createHashObj')
+const hashFilesObj = require('../lib/hashFilesObj')
 
 describe('writeJs', () => {
   it('should write js file to wf/', done => {
-    const filesArray = makeFilesObj(__dirname)
+    const filesObj = makeFilesObj(__dirname, 'files/')
 
-    createHashObj(filesArray).then(hashObj => {
-      fs.mkdir(__dirname + '/wf', err => {
-        writeJs(hashObj, __dirname + '/wf/webflight.js').then(result => {
-          const wroteJs = fs.statSync(__dirname + '/wf/webflight.js').isFile()
-          
-          fs.unlink(__dirname + '/wf/webflight.js', err => {
-            fs.rmdir(__dirname + '/wf', err => {
-              assert.equal(wroteJs, true)
-              done()
-            })
-          })
+    hashFilesObj(filesObj).then(hashObj => {
+      writeJs(__dirname + '/writeJs/webflight.js', hashObj).then(result => {
+        const wroteJs = fs.statSync(__dirname + '/writeJs/webflight.js').isFile()
+        
+        fs.unlink(__dirname + '/writeJs/webflight.js', err => {
+          assert.equal(wroteJs, true)
+          done()
         })
       })
     }) 
