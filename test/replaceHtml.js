@@ -1,3 +1,5 @@
+/* globals describe, it */
+
 var fs = require('fs')
 var assert = require('assert')
 var replaceHtml = require('../lib/replaceHtml')
