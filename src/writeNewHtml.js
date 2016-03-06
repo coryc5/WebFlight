@@ -2,8 +2,11 @@
 
 const fs = require('fs')
 
-function writeNewHtml (htmlString, fileName) {
-  fs.writeFileSync(`${__dirname}/${fileName}.html`, htmlString, 'utf8')
+function writeNewHtml (fileName, htmlString) {
+  return new Promise((resolve, reject) => {
+    fs.writeFileSync(fileName, htmlString, 'utf8')
+    resolve()
+  })
 }
 
 module.exports = writeNewHtml
