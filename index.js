@@ -6,7 +6,7 @@ const hashFilesObj = require('./lib/hashFilesObj')
 const writeJs = require('./lib/writeJs')
 const replaceHtml = require('./lib/replaceHtml')
 const writeNewHtml = require('./lib/writeNewHtml')
-const botGenerator = require(('./server/botGenerator'))
+const botGenerator = require(('./src/botGenerator'))
 
 const WebFlight = {}
 
@@ -25,8 +25,10 @@ WebFlight.start = (options) => {
       .then(writeJs.bind(null, options.jsOutput))
       .then(replaceHtml.bind(null, originalHtmlString))
       .then(writeNewHtml.bind(null, options.htmlOutput))
-      // call botGenerator
-      .then(resolve(options))
+      .then(botGenerator.bind(null, options))
+      .then(resolve)
+
+    WebFlight.route = options.route
   })
 }
 
