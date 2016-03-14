@@ -3,6 +3,7 @@
 const express = require('express')
 const botGenerator = require('./botGenerator.js')
 const app = express()
+const althtml = require('./althtml.js')
 
 let count = 0
 
@@ -17,6 +18,11 @@ app.use((req, res, next) => {
 // Middleware func that starts electron-spawn at a specified count
 app.use(botGenerator())
 
+//func to send client stringified version of html
+app.get('/somepath', function(req,res){
+  console.log('req.url',req.url)
+  althtml(req,res);
+})
 app.listen(3000, () => {
   console.log('listening on 3000')
 })
