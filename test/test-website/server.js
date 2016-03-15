@@ -36,6 +36,4 @@ app.get('/webflight.js', (req, res) => {
   res.sendFile(__dirname + '/webflight.js')
 })
 
-
-
 app.listen(3000)
