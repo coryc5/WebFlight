@@ -1,17 +1,24 @@
 /* global describe, it */
 'use strict'
 
+// Testing requirements
 const path = require('path')
 const chai = require('chai')
 let assert = chai.assert
 let expect = chai.expect
-let should = chai.should
-var chaiAsPromised = require('chai-as-promised')
+// let should = chai.should
+const chaiAsPromised = require('chai-as-promised')
+const chaifs = require('chai-fs')
 chai.use(chaiAsPromised)
+chai.use(chaifs)
+
+// Functions being tested
 const stringifyHtml = require('../../lib/stringifyHtml')
 const makeFilesObj = require('../../lib/makeFilesObj')
 const hashFilesObj = require('../../lib/hashFilesObj')
+const writeJsDL = require('../../lib/writeJsDL')
 
+// Testing input
 const wfOptions = {
   originalHtml: path.join(__dirname, 'index.html'),
   filesFolder: path.join(__dirname, 'img'),
@@ -22,49 +29,52 @@ const wfOptions = {
   route: '/'
 }
 
-const testHtml =
-`<!DOCTYPE>
-<html>
-  <body>
-     <script src="https://cdn.jsdelivr.net/webtorrent/latest/webtorrent.min.js"></script>
-  </body>
-</html>`
+// Testing variables
+const stringifiedHtml = stringifyHtml(path.join(__dirname, '../replaceHtml/index.html'))
+const filesObj = makeFilesObj(wfOptions.filesFolder, wfOptions.filesRoute)
+const fileNames = Object.keys(filesObj)
 
-// const filesObj = { 'img/bird1.jpg': { fileOnServer: '/Users/Baoyee/Codesmith/WebFlight/test/tiffany/img/bird1.jpg' },
-//   'img/bird2.jpg': { fileOnServer: '/Users/Baoyee/Codesmith/WebFlight/test/tiffany/img/bird2.jpg' },
-// 'img/bird3.jpg': { fileOnServer: '/Users/Baoyee/Codesmith/WebFlight/test/tiffany/img/bird3.jpg' } }
-
-describe('index.js functions test', () => {
-  let filesObj = makeFilesObj(wfOptions.filesFolder, wfOptions.filesRoute)
-  let fileNames = Object.keys(filesObj)
-
-  it('stringifyHtml: should read a file and return a string of the file contents', function () {
-    assert.equal(testHtml, stringifyHtml(path.join(__dirname, '../replaceHtml/index.html')))
+// Testing begins
+describe('stringifyHtml', () => {
+  it('output should not equal path', () => {
+    assert.notEqual(wfOptions.originalHtml, stringifiedHtml)
   })
+  it('should return a string', () => {
+    expect(stringifiedHtml).to.be.a('string')
+  })
+})
 
-  it('makeFilesObj: expect output to have file names as keys', () => {
+describe('makeFilesObj', () => {
+  it('expect output to have file names as keys', () => {
     fileNames.forEach(function (file) {
       expect(filesObj).to.have.property(file)
     })
   })
+})
 
-  it('hashFilesObj: expect hashedObj to have correct keys', () => {
-    let hashedObjFunc = hashFilesObj(filesObj)
+describe('hashFilesObj', () => {
+  it('expect hashedObj to have correct keys', () => {
+    const hashedObjFunc = hashFilesObj(filesObj)
     return hashedObjFunc.then(function (hashedObj) {
       for (var info in hashedObj) {
         expect(hashedObj[info]).to.have.all.keys('hash', 'magnet', 'fileOnServer')
       }
     })
   })
+})
 
-  it('writeJsDL', () => {
-
+describe('writeJsDL', () => {
+  // Waiting for post-promise hashed obj
+  writeJsDL(wfOptions.jsOutputDL, filesObj)
+  it('output (webflight.js) file is created', () => {
+    assert.isFile(path.join(__dirname, 'webflight.js'))
   })
-
-  it('writeJsUL', () => {
-
+  it('file should "client.add" all files in obj', () => {
+    
   })
 })
 
+// it('writeJsUL', () => {
+// })
 
 // return expect(hashedObjFunc).to.eventually.have.property('img/bird')
