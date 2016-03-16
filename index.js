@@ -34,7 +34,7 @@ WebFlight.prototype.start = function () {
   hashFilesObj(filesObj)
     .then(writeJsDL.bind(null, this.jsOutputDL))
     .then(writeJsUL.bind(null, this.jsOutputUL))
-    .then(replaceHtml.bind(null, originalHtmlString, this.jsOutputDL))
+    .then(replaceHtml.bind(null, originalHtmlString, path.basename(this.jsOutputDL)))
     .then(writeNewHtml.bind(null, this.htmlOutput))
     .then(botGenerator.bind(null, this))
 }
