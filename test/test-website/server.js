@@ -3,7 +3,6 @@ const app = express()
 
 const path = require('path')
 const WebFlight = require('../..')
-
 const wfObj = {
   originalHtml: path.join(__dirname, 'index.html'),
   filesFolder: path.join(__dirname, 'img'),
