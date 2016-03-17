@@ -35,22 +35,6 @@ function WebFlight (options) {
     this[key] = options[key]
   })
 
-<<<<<<< HEAD
-/**
-new config obj. enables collections of asset Paths/ Routes
-  configObj = {
-   assetsPath: ''/['', ''],
-   assetsRoute: ''/['', ''],
-   wfPath: ''/Default(__dirname + '/wfPath'),
-   wfRoute: ''/Default('/wfRoute'),
-   seedScript: ''/Default('wf-seed.js'),
-   routes: {
-     '/about.html': 'path/to/about.html'
-   }
-  }
-*/
-
-=======
   let fileNamesArr = Object.keys(this.routes).map((file) => {
     return path.basename(file, '.html')
   })
@@ -78,7 +62,6 @@ new config obj. enables collections of asset Paths/ Routes
   })()
 }
 
->>>>>>> master
 WebFlight.prototype.start = function () {
   const originalHtmlString = stringifyHtml(this.originalHtml)
   const filesObj = makeFilesObj(this.filesFolder, this.filesRoute)
