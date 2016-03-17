@@ -1,10 +1,9 @@
+/* global describe, it */
 'use strict'
 
 const assert = require('assert')
-
 const hashFilesObj = require('../../lib/hashFilesObj')
 const makeFilesObj = require('../../lib/makeFilesObj')
-
 const filesObj = makeFilesObj(__dirname, '/img')
 
 describe('hashFilesObj', () => {
