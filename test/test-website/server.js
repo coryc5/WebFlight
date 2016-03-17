@@ -3,7 +3,6 @@ const app = express()
 
 const path = require('path')
 const WebFlight = require('../..')
-
 const wfObj = {
   originalHtml: path.join(__dirname, 'index.html'),
   filesFolder: path.join(__dirname, 'img'),
@@ -11,10 +10,15 @@ const wfObj = {
   jsOutputDL: path.join(__dirname, 'webflight.js'),
   jsOutputUL: path.join(__dirname, 'wf/seedUL.js'),
   htmlOutput: path.join(__dirname, 'wf/index.html'),
-  route: '/'
+  route: '/',
+  redirectTo: '/wf/'
 }
 
-WebFlight.start(wfObj)
+const wf = new WebFlight(wfObj)
+
+wf.start()
+
+app.use(wf.redirect.bind(wf))
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html')
