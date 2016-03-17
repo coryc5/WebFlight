@@ -44,6 +44,7 @@ function WebFlight (options) {
 }
 
 // options :: Object
+  // siteUrl: String                (required)
   // assetsPath: String|Array   (required)
   // assetsRoute: String|Array  (required)
   // wfPath: String             (optional - defaults to '/wfPath')

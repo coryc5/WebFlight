@@ -25,7 +25,8 @@ var wf = new WebFlight({
     '/about.html': 'users/baoyee/codesmith/about.html',
     '/index.html': 'users/baoyee/codesmith/index.html',
     '/info.html': 'users/baoyee/codesmith/info.html'
-  }
+  },
+  url: 'http://www.google.com'
 })
 
 console.log(wf)
