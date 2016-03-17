@@ -11,39 +11,23 @@ const replaceHtml = require('./lib/replaceHtml')
 const writeNewHtml = require('./lib/writeNewHtml')
 const botGenerator = require(('./src/botGenerator'))
 
-/**
-*  siteUrl: String            (required)
-*  assetsPath: String|Array   (required)
-*  assetsRoute: String|Array  (required)
-*  wfPath: String             (optional - defaults to '/wfPath')
-*  wfRoute: String            (optional - defaults to '/wfRoute')
-*  seedScript: String         (optional - defaults to 'wf-seed.js')
-*  routes: Object             (required)
-
-*   assetsPath: ''/['', ''],
-*   assetsRoute: ''/['', ''],
-*   wfPath: ''/Default(__dirname + '/wfPath'),
-*   wfRoute: ''/Default('/wfRoute'),
-*   seedScript: ''/Default('wf-seed.js'),
-*   routes: {
-*   '/about.html': 'path/to/about.html'
-* }
-*/
-
 function WebFlight (options) {
   Object.keys(options).forEach((key) => {
     this[key] = options[key]
   })
 
-  let fileNamesArr = Object.keys(this.routes).map((file) => {
-    return path.basename(file, '.html')
-  })
+  let fileNamesArr = (() => {
+    let fileArray = []
+    for (let route in this.routes) {
+      fileArray.push(path.basename(this.routes[route], '.html'))
+    }
+    return fileArray
+  })()
 
   this.count = 0  // non-configurable
-  this.fileNames = fileNamesArr // non-configurable
-
-  this.wfPath = options.wfPath ? 'options.wfPath' : (__dirname + '/wfPath')  // default
-  this.wfRoute = options.wfRoute ? 'options.wfRoute' : ('/wfRoute')  // default
+  this.fileNames = fileNamesArr  // non-configurable
+  this.wfPath = options.wfPath ? options.wfPath : (__dirname + '/wfPath')  // default
+  this.wfRoute = options.wfRoute ? options.wfRoute : ('/wfRoute')  // default
 
   this.seedScript = options.seedScript  // default
   ? options.seedScript
@@ -60,7 +44,35 @@ function WebFlight (options) {
       return `${this.wfPath}/wf-${file}.html`
     })
   })()
+
+  this.userCount = options.userCount ? options.userCount : 10  // default (redirect)
+  this.prepCount = Math.floor(this.userCount * 0.75)  // non-configurable (start bots)
+  this.stopCount = Math.floor(this.userCount * 0.50)  // non-configurable (kill bots, redirect back)
+
+  if (!this.siteUrl) console.error('Error: WebFlight options object requires "siteUrl" property')
+  if (!this.assetsPath) console.error('Error: WebFlight options object requires "assetsPath" property')
+  if (!this.assetsRoute) console.error('Error: WebFlight options object requires "assetsRoute" property')
+  if (!this.routes) console.error('Error: WebFlight options object requires "routes" property')
 }
+
+// options :: Object
+  // siteUrl: String            (required)
+  // assetsPath: String|Array   (required)
+  // assetsRoute: String|Array  (required)
+  // routes: Object             (required)
+  // userCount: Number          (optional - defaults to 10)
+  // wfPath: String             (optional - defaults to '/wfPath')
+  // wfRoute: String            (optional - defaults to '/wfRoute')
+  // seedScript: String         (optional - defaults to 'wf-seed.js')
+
+  //  siteUrl: ''
+  //  assetsPath: ''/['', ''],
+  //  assetsRoute: ''/['', ''],
+  //  routes: {'/about.html': 'path/to/about.html'}
+  //  userCount: 10
+  //  wfPath: ''/Default(__dirname + '/wfPath'),
+  //  wfRoute: ''/Default('/wfRoute'),
+  //  seedScript: ''/Default('wf-seed.js'),
 
 WebFlight.prototype.start = function () {
   const originalHtmlString = stringifyHtml(this.originalHtml)
@@ -84,10 +96,18 @@ WebFlight.prototype.redirect = function (req, res, next) {
   if (path.extname(destination) === '.html' || path.extname(destination) === '') {
     console.log(++this.count, 'entering')
 
-    setTimeout(function () { console.log(--this.count, 'exiting') }.bind(this), 10000)
+    res.on('finish', () => {
+      setTimeout(function () {
+        console.log(--this.count, 'exiting')
+      }.bind(this), 10000)
+    }).on('close', () => {
+      setTimeout(function () {
+        console.log(--this.count, 'exiting')
+      }.bind(this), 10000)
+    })
   }
 
-  if (this.routes[destination]) {
+  if (destination === this.route || (!path.extname(req.originalUrl) && destination === path.basename(req.originalUrl))) {
     res.sendFile(this.htmlOutput)
   } else {
     next()
