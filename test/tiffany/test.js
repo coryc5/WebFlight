@@ -20,12 +20,20 @@ const webflightOptions = {
   route: '/'
 }
 
-const filesObj = makeFilesObj(webflightOptions.filesFolder, webflightOptions.filesRoute)
-
-const result = writeJsDL(webflightOptions.jsOutputDL, filesObj)
-result.then((val) => {
-  console.log(val);
+var wf = new WebFlight({
+  routes: {
+    '/about.html': 'users/baoyee/codesmith/about.html',
+    '/index.html': 'users/baoyee/codesmith/index.html',
+    '/info.html': 'users/baoyee/codesmith/info.html'
+  }
 })
+console.log(wf)
+// console.log(path.basename(path.join(__dirname, 'index.html')))
+// const filesObj = makeFilesObj(webflightOptions.filesFolder, webflightOptions.filesRoute)
+// const result = writeJsDL(webflightOptions.jsOutputDL, filesObj)
+// result.then((val) => {
+//   console.log(val);
+// })
 // console.log(result);
 // const beforeString = webflightOptions.originalHtml
 // const string = stringifyHtml(webflightOptions.originalHtml)
