@@ -1,13 +1,11 @@
 /* global describe, it */
 'use strict'
-
-// Testing requirements
 const path = require('path')
 const chai = require('chai')
 let assert = chai.assert
 let expect = chai.expect
-// let should = chai.should
-// const chaiAsPromised = require('chai-as-promised')
+
+
 const chaifs = require('chai-fs')
 // chai.use(chaiAsPromised)
 chai.use(chaifs)
@@ -18,7 +16,6 @@ const makeFilesObj = require('../../lib/makeFilesObj')
 const hashFilesObj = require('../../lib/hashFilesObj')
 const writeJsDL = require('../../lib/writeJsDL')
 const writeJsUL = require('../../lib/writeJsUL')
-const replaceHtml = require('../../lib/replaceHtml')
 
 // Testing input
 const wfOptions = {
@@ -34,11 +31,7 @@ const wfOptions = {
 // Testing variables
 const stringifiedHtml = stringifyHtml(path.join(__dirname, 'index.html'))
 const filesObj = makeFilesObj(wfOptions.filesFolder, wfOptions.filesRoute)
-const fileNames = Object.keys(filesObj)
 const hashedObjFunc = hashFilesObj(filesObj)
-// let hashedObj = hashedObjFunc.then((hashedObject) => {
-//   return hashedObject
-// })
 
 // Testing begins
 describe('stringifyHtml', () => {
@@ -57,7 +50,7 @@ describe('stringifyHtml', () => {
 // should work for arrays, if array, find number of route/file iterations and make sure number of keys matches
 describe('makeFilesObj', function () {
   it('should return array of files in directory', function () {
-    const array = makeFilesObj(path.join(__dirname + '/test-dir'), 'files/')
+    const array = makeFilesObj(path.join(__dirname, '/test-dir'), 'files/')
 
     assert.deepEqual({
       'files/fun.jpg': {fileOnServer: `${__dirname}/test-dir/fun.jpg`},
@@ -180,26 +173,4 @@ describe('writeJsUL', () => {
     })
   })
 })
-// // don't check if ALL src tags are removed (e.g. imgur)
-// describe('replaceHtml', () => {
-//   it('WebTorrent and WebFlight scripts should be appended to page', () => {
-//     return hashedObjFunc.then((hashedObj) => {
-//       let replacedString = replaceHtml(stringifiedHtml, wfOptions.htmlOutput, hashedObj)
-//     })
-//   })
-//   it('html should not contain any source attributes', () => {
-//   })
-//   it('html should contain all file hashes as class names', () => {
-//     // might want to include cheerio to search through document
-//   })
-// })
-//
-// describe('writeNewHtml', () => {
-//   it('', () => {
-//   })
-// })
-//
-// describe('botGenerator', () => {
-//   it('', () => {
-//   })
-// })
+
