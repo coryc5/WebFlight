@@ -11,7 +11,8 @@
   "standard": {
     "parser": "babel-eslint",
     "ignore": [
-      "/test/index/*", 
+      "/test/tests/webflight.js",
+      "/test/tests/wf/seedUL.js",
       "/test/test-website/"
     ]
   },
