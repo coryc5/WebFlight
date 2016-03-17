@@ -18,20 +18,23 @@ function WebFlight (options) {
   this.count = 0
 }
 
-// options :: Object
-  // originalHtml: .html file to be rebuilt
-  // filesFolder: folder with files to be torrented
-  // filesRoute: path on the server for files
-  // jsOutputDL: location and name for webflight.js file
-  // jsOutputUL: location and name for file seeding torrents
-  // htmlOutput: location and name for rebuilt html file
-  // route: route to redirect
-
+/**
+new config obj. enables collections of asset Paths/ Routes
+  configObj = {
+   assetsPath: ''/['', ''],
+   assetsRoute: ''/['', ''],
+   wfPath: ''/Default(__dirname + '/wfPath'),
+   wfRoute: ''/Default('/wfRoute'),
+   seedScript: ''/Default('wf-seed.js'),
+   routes: {
+     '/about.html': 'path/to/about.html'
+   }
+  }
+*/
 
 WebFlight.prototype.start = function () {
   const originalHtmlString = stringifyHtml(this.originalHtml)
   const filesObj = makeFilesObj(this.filesFolder, this.filesRoute)
-
 
   hashFilesObj(filesObj)
     .then(writeJsDL.bind(null, this.jsOutputDL))
