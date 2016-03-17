@@ -23,40 +23,34 @@ function WebFlight (options) {
   this.count = 0  // non-configurable
   this.fileNames = fileNamesArr // non-configurable
 
-  this.wfPath = options.wfPath ? 'options.wfPath' : (__dirname + '/wfPath')
-  this.wfRoute = options.wfRoute ? 'options.wfRoute' : ('/wfRoute')
+  this.wfPath = options.wfPath ? 'options.wfPath' : (__dirname + '/wfPath')  // default
+  this.wfRoute = options.wfRoute ? 'options.wfRoute' : ('/wfRoute')  // default
 
-  this.jsOutputDL = (() => {
+  this.seedScript = options.seedScript  // default
+  ? options.seedScript
+  : path.join(__dirname, 'wfPath/js/wf-seed.js')
+
+  this.jsOutputDL = (() => {  // non-configurable
     return fileNamesArr.map((file) => {
-      return `${this.wfPath}/${file}-download.js`  // non-configurable
+      return `${this.wfPath}/js/${file}-download.js`
     })
   })()
 
-  this.htmlOutput = (() => {
+  this.htmlOutput = (() => {  // non-configurable
     return fileNamesArr.map((file) => {
       return `${this.wfPath}/wf-${file}.html`
     })
-  })()  // non-configurable
-
-  this.seedScript = options.seedScript
-    ? options.seedScript
-    : path.join(__dirname, 'wfPath/wf-seed.js') // default
+  })()
 }
 
 // options :: Object
   // assetsPath: String|Array   (required)
   // assetsRoute: String|Array  (required)
-  // wfPath: String             (optional)
-  // wfRoute: String            (optional)
-  //
-  // originalHtml: .html file to be rebuilt
-  // filesFolder: folder with files to be torrented
-  // filesRoute: path on the server for files
-  // jsOutputDL: location and name for webflight.js file
-  // jsOutputUL: location and name for file seeding torrents
-  // htmlOutput: location and name for rebuilt html file
-  // route: route to redirect
-  //
+  // wfPath: String             (optional - defaults to '/wfPath')
+  // wfRoute: String            (optional - defaults to '/wfRoute')
+  // seedScript: String         (optional - defaults to 'wf-seed.js')
+  // routes: Object             (required)
+
   //  assetsPath: ''/['', ''],
   //  assetsRoute: ''/['', ''],
   //  wfPath: ''/Default(__dirname + '/wfPath'),

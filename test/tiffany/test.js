@@ -27,6 +27,7 @@ var wf = new WebFlight({
     '/info.html': 'users/baoyee/codesmith/info.html'
   }
 })
+
 console.log(wf)
 // console.log(path.basename(path.join(__dirname, 'index.html')))
 // const filesObj = makeFilesObj(webflightOptions.filesFolder, webflightOptions.filesRoute)
