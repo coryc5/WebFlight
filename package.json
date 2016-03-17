@@ -16,7 +16,7 @@
     "url": "git+https://github.com/Team-Webflight/WebFlight.git"
   },
   "author": "Team WebFlight",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Team-WebFlight/WebFlight/issues"
   },
