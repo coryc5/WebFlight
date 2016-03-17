@@ -29,16 +29,24 @@ var wf = new WebFlight({
   siteUrl: 'http://www.google.com'
 })
 
-app.listen(3000, () => {
-  // console.log('listening on 3000')
-})
+let obj = {
+  hi: 'hello',
+  bye: 'goodbye'
+}
 
-app.get('/', (req, res) => {
-  console.error('trying error')
-  // res.sendfile(console.error('hello'))
-})
+for (let val of obj) {
+  console.log(val)
+}
+// app.listen(3000, () => {
+//   // console.log('listening on 3000')
+// })
+//
+// app.get('/', (req, res) => {
+//   console.error('trying error')
+//   // res.sendfile(console.error('hello'))
+// })
 
-console.log(wf)
+// console.log(wf)
 // console.log(path.basename(path.join(__dirname, 'index.html')))
 // const filesObj = makeFilesObj(webflightOptions.filesFolder, webflightOptions.filesRoute)
 // const result = writeJsDL(webflightOptions.jsOutputDL, filesObj)

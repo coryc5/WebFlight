@@ -3,6 +3,7 @@
 
 // Testing requirements
 const path = require('path')
+const $ = require('cheerio')
 const chai = require('chai')
 let assert = chai.assert
 let expect = chai.expect
@@ -33,12 +34,10 @@ const wfOptions = {
 
 // Testing variables
 const stringifiedHtml = stringifyHtml(path.join(__dirname, 'index.html'))
+// const stringifiedHtmlArr = stringifyHtml([path.join(__dirname, 'index.html'), path.join(__dirname, 'about.html')])
 const filesObj = makeFilesObj(wfOptions.filesFolder, wfOptions.filesRoute)
 const fileNames = Object.keys(filesObj)
 const hashedObjFunc = hashFilesObj(filesObj)
-// let hashedObj = hashedObjFunc.then((hashedObject) => {
-//   return hashedObject
-// })
 
 // Testing begins
 describe('stringifyHtml', () => {
@@ -48,17 +47,14 @@ describe('stringifyHtml', () => {
   it('should return a string if single input', () => {
     expect(stringifiedHtml).to.be.a('string')
   })
-  it('should return an array if multiple outputs', () => {
-    // expect output to be an array
-    // (create a separate test case)
+  it('should return an array if multiple inputs', () => {
+    // expect(stringifiedHtmlArr).to.be.a('array')
   })
 })
 
-// should work for arrays, if array, find number of route/file iterations and make sure number of keys matches
 describe('makeFilesObj', function () {
   it('should return array of files in directory', function () {
     const array = makeFilesObj(path.join(__dirname + '/test-dir'), 'files/')
-
     assert.deepEqual({
       'files/fun.jpg': {fileOnServer: `${__dirname}/test-dir/fun.jpg`},
       'files/laughter.html': {fileOnServer: `${__dirname}/test-dir/laughter.html`},
@@ -181,18 +177,27 @@ describe('writeJsUL', () => {
   })
 })
 // // don't check if ALL src tags are removed (e.g. imgur)
-// describe('replaceHtml', () => {
-//   it('WebTorrent and WebFlight scripts should be appended to page', () => {
-//     return hashedObjFunc.then((hashedObj) => {
-//       let replacedString = replaceHtml(stringifiedHtml, wfOptions.htmlOutput, hashedObj)
-//     })
-//   })
-//   it('html should not contain any source attributes', () => {
-//   })
-//   it('html should contain all file hashes as class names', () => {
-//     // might want to include cheerio to search through document
-//   })
-// })
+describe('replaceHtml', () => {
+  it('WebTorrent and WebFlight scripts should be appended to page', () => {
+    return hashedObjFunc.then((hashedObj) => {
+      let replacedString = replaceHtml(stringifiedHtml, wfOptions.htmlOutput, hashedObj)
+      expect(replacedString).to.include('webtorrent.min.js')
+      // expect(replacedString).to.include('webflight.js')
+      expect(replacedString).to.not.include('undefined')
+    })
+  })
+  it('html should not contain any source attributes', () => {
+    let source = $('img').attr('src')
+    console.log(source)
+  })
+  it('html should contain all file hashes as class names', () => {
+    return hashedObjFunc.then((hashedObj) => {
+      let replacedString = replaceHtml(stringifiedHtml, wfOptions.htmlOutput, hashedObj)
+      expect(replacedString).to.include(hashedObj['img/bird1.jpg'].hash)
+      expect(replacedString).to.include(hashedObj['img/bird2.jpg'].hash)
+    })
+  })
+})
 //
 // describe('writeNewHtml', () => {
 //   it('', () => {
