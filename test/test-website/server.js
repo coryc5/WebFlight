@@ -4,25 +4,43 @@ const app = express()
 const path = require('path')
 const WebFlight = require('../..')
 
+// options :: Object
+  // siteUrl: String                (required)
+  // assetsPath: String|Array   (required)
+  // assetsRoute: String|Array  (required)
+  // wfPath: String             (optional - defaults to '/wfPath')
+  // wfRoute: String            (optional - defaults to '/wfRoute')
+  // seedScript: String         (optional - defaults to 'wf-seed.js')
+  // routes: Object             (required)
+
+  //  assetsPath: ''/['', ''],
+  //  assetsRoute: ''/['', ''],
+  //  wfPath: ''/Default(__dirname + '/wfPath'),
+  //  wfRoute: ''/Default('/wfRoute'),
+  //  seedScript: ''/Default('wf-seed.js'),
+  //  routes: {
+  //    '/about.html': 'path/to/about.html'
+  //  }
+
 const wfObj = {
-  originalHtml: path.join(__dirname, 'index.html'),
-  filesFolder: path.join(__dirname, 'img'),
-  filesRoute: 'img/',
-  jsOutputDL: path.join(__dirname, 'webflight.js'),
-  jsOutputUL: path.join(__dirname, 'wf/seedUL.js'),
-  htmlOutput: path.join(__dirname, 'wf/index.html'),
-  route: '/',
-  redirectTo: '/wf/'
+  siteUrl: 'http://localhost:3000',
+  assetsPath: [path.join(__dirname, 'img'), path.join(__dirname, 'videos')],
+  assetsRoute: ['bird-imgs/', 'bird-videos/', 'other-imgs/'],
+  routes: {
+    '/': path.join(__dirname, 'index.html'),
+    '/how.html': path.join(__dirname, 'how.html')
+  }
 }
 
-const wf = new WebFlight(wfObj)
+const wf = new WebFlight(wfObj, __dirname)
 
+wf.init()
 wf.start()
 
-app.use(wf.redirect.bind(wf))
+app.use(wf.watch.bind(wf))
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html')
+  res.sendFile(path.join(__dirname, '/index.html'))
 })
 
 app.get('/img/*', (req, res) => {
