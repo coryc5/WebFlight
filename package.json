@@ -9,7 +9,11 @@
     "test-start": "node test/test-website/server.js"
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "ignore": [
+      "/test/index/*", 
+      "/test/test-website/"
+    ]
   },
   "repository": {
     "type": "git",
