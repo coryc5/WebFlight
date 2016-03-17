@@ -20,16 +20,31 @@ function WebFlight (options) {
 
 // options :: Object
   // originalHtml: .html file to be rebuilt
-  // filesFolder: folder with files to be torrented
-  // filesRoute: path on the server for files
+  // asssetsFolder: folder with files to be torrented
+  // assetsRoute: path on the server for files
   // jsOutputDL: location and name for webflight.js file
   // jsOutputUL: location and name for file seeding torrents
   // htmlOutput: location and name for rebuilt html file
   // route: route to redirect
+  
+/**
+new config obj. enables collections of asset Paths/ Routes
+  configObj = {
+   assetsPath: ''/['', ''],
+   assetsRoute: ''/['', ''],
+   wfPath: ''/Default(__dirname + '/wfPath'),
+   wfRoute: ''/Default('/wfRoute'),
+   seedScript: ''/Default('wf-seed.js'),
+   routes: {
+     '/about.html': 'path/to/about.html'
+   }
+  }
+*/
+
+
 WebFlight.prototype.start = function () {
   const originalHtmlString = stringifyHtml(this.originalHtml)
   const filesObj = makeFilesObj(this.filesFolder, this.filesRoute)
-
 
   hashFilesObj(filesObj)
     .then(writeJsDL.bind(null, this.jsOutputDL))
@@ -49,22 +64,16 @@ WebFlight.prototype.redirect = function (req, res, next) {
   if (path.extname(destination) === '.html' || path.extname(destination) === '') {
     console.log(++this.count, 'entering')
 
-    res.on('finish', () => {
-      setTimeout(function () {
-        console.log(--this.count, 'exiting')
-      }.bind(this), 10000)
-    }).on('close', () => {
-      setTimeout(function () {
-        console.log(--this.count, 'exiting')
-      }.bind(this), 10000)
-    })
+    setTimeout(function () { console.log(--this.count, 'exiting') }.bind(this), 10000)
   }
 
-  if (destination === this.route || (!path.extname(req.originalUrl) && destination === path.basename(req.originalUrl))) {
+  if (this.routes[destination]) {
+
     res.sendFile(this.htmlOutput)
   } else {
     next()
   }
 }
+
 
 module.exports = WebFlight
