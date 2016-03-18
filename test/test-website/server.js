@@ -36,9 +36,6 @@ app.get('/bird-videos/:video', (req, res) => {
   res.sendFile(path.join(__dirname, 'videos', req.params.video))
 })
 
-app.get('/birdVid.ogv', (req, res) => {
-  res.sendFile(__dirname + '/videos/birdVid.ogv')
-})
 
 
 app.listen(3000)

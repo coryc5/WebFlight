@@ -1,13 +1,11 @@
 /* global describe, it */
 'use strict'
-
-// Testing requirements
 const path = require('path')
 const chai = require('chai')
 let assert = chai.assert
 let expect = chai.expect
-// let should = chai.should
-// const chaiAsPromised = require('chai-as-promised')
+
+
 const chaifs = require('chai-fs')
 // chai.use(chaiAsPromised)
 chai.use(chaifs)
@@ -18,7 +16,6 @@ const makeFilesObj = require('../../lib/makeFilesObj')
 const hashFilesObj = require('../../lib/hashFilesObj')
 const writeJsDL = require('../../lib/writeJsDL')
 const writeJsUL = require('../../lib/writeJsUL')
-const replaceHtml = require('../../lib/replaceHtml')
 
 // Testing input
 const wfOptions = {
@@ -34,11 +31,7 @@ const wfOptions = {
 // Testing variables
 const stringifiedHtml = stringifyHtml(path.join(__dirname, 'index.html'))
 const filesObj = makeFilesObj(wfOptions.filesFolder, wfOptions.filesRoute)
-const fileNames = Object.keys(filesObj)
 const hashedObjFunc = hashFilesObj(filesObj)
-// let hashedObj = hashedObjFunc.then((hashedObject) => {
-//   return hashedObject
-// })
 
 // Testing begins
 describe('stringifyHtml', () => {
@@ -57,37 +50,36 @@ describe('stringifyHtml', () => {
 // should work for arrays, if array, find number of route/file iterations and make sure number of keys matches
 describe('makeFilesObj', function () {
   it('should return array of files in directory', function () {
-    const array = makeFilesObj(path.join(__dirname + '/test-dir'), 'files/')
+    const array = makeFilesObj(path.join(__dirname, '/test-dir'), 'files/')
 
     assert.deepEqual({
-      'files/fun.jpg': {fileOnServer: `${__dirname}/test-dir/fun.jpg`},
-      'files/laughter.html': {fileOnServer: `${__dirname}/test-dir/laughter.html`},
-      'files/neat.png': {fileOnServer: `${__dirname}/test-dir/neat.png`}
+      'files/index.html': {fileOnServer: `${__dirname}/test-dir/index.html`},
+      'files/index2.html': {fileOnServer: `${__dirname}/test-dir/index2.html`}
     }, array)
   })
   it('should work with array of directories and single route', function () {
-    const filesObj = makeFilesObj([path.join(__dirname, '/test-dir2'), path.join(__dirname, '/replaceHtml')], '/files')
+    const filesObj = makeFilesObj([path.join(__dirname, '/test-dir2'), path.join(__dirname, '/test-dir')], '/files')
 
     assert.deepEqual({
       'files/webtorrent-breaks-if-folder-is-empty': {fileOnServer: `${__dirname}/test-dir2/webtorrent-breaks-if-folder-is-empty`},
       'files/t.txt': {fileOnServer: `${__dirname}/test-dir2/t.txt`},
-      'files/index.html': {fileOnServer: `${__dirname}/replaceHtml/index.html`},
-      'files/index2.html': {fileOnServer: `${__dirname}/replaceHtml/index2.html`}
+      'files/index.html': {fileOnServer: `${__dirname}/test-dir/index.html`},
+      'files/index2.html': {fileOnServer: `${__dirname}/test-dir/index2.html`}
     }, filesObj)
   })
 
   it('should work with array of directories and array of routes', function () {
-    const filesObj = makeFilesObj([path.join(__dirname, '/test-dir2'), path.join(__dirname, '/replaceHtml')], ['/files', '/img'])
+    const filesObj = makeFilesObj([path.join(__dirname, '/test-dir2'), path.join(__dirname, '/test-dir')], ['/files', '/img'])
 
     assert.deepEqual({
       'files/webtorrent-breaks-if-folder-is-empty': {fileOnServer: `${__dirname}/test-dir2/webtorrent-breaks-if-folder-is-empty`},
       'files/t.txt': {fileOnServer: `${__dirname}/test-dir2/t.txt`},
-      'files/index.html': {fileOnServer: `${__dirname}/replaceHtml/index.html`},
-      'files/index2.html': {fileOnServer: `${__dirname}/replaceHtml/index2.html`},
+      'files/index.html': {fileOnServer: `${__dirname}/test-dir/index.html`},
+      'files/index2.html': {fileOnServer: `${__dirname}/test-dir/index2.html`},
       'img/webtorrent-breaks-if-folder-is-empty': {fileOnServer: `${__dirname}/test-dir2/webtorrent-breaks-if-folder-is-empty`},
       'img/t.txt': {fileOnServer: `${__dirname}/test-dir2/t.txt`},
-      'img/index.html': {fileOnServer: `${__dirname}/replaceHtml/index.html`},
-      'img/index2.html': {fileOnServer: `${__dirname}/replaceHtml/index2.html`}
+      'img/index.html': {fileOnServer: `${__dirname}/test-dir/index.html`},
+      'img/index2.html': {fileOnServer: `${__dirname}/test-dir/index2.html`}
     }, filesObj)
   })
 })
@@ -180,26 +172,3 @@ describe('writeJsUL', () => {
     })
   })
 })
-// // don't check if ALL src tags are removed (e.g. imgur)
-// describe('replaceHtml', () => {
-//   it('WebTorrent and WebFlight scripts should be appended to page', () => {
-//     return hashedObjFunc.then((hashedObj) => {
-//       let replacedString = replaceHtml(stringifiedHtml, wfOptions.htmlOutput, hashedObj)
-//     })
-//   })
-//   it('html should not contain any source attributes', () => {
-//   })
-//   it('html should contain all file hashes as class names', () => {
-//     // might want to include cheerio to search through document
-//   })
-// })
-//
-// describe('writeNewHtml', () => {
-//   it('', () => {
-//   })
-// })
-//
-// describe('botGenerator', () => {
-//   it('', () => {
-//   })
-// })
