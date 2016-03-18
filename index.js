@@ -72,12 +72,15 @@ function WebFlight (options, serverRoot) {
 }
 
 WebFlight.prototype.init = function () {
-  const htmlStrings = stringifyHtmlFiles(this.fileNames)
+  const htmlFiles = Object.keys(this.routes).map((route) => {
+    return this.routes[route]
+  })
+  const htmlStrings = stringifyHtmlFiles(htmlFiles)
   const filesObj = makeFilesObj(this.assetsPath, this.assetsRoute)
 
   hashFilesObj(filesObj)
     .then(writeJsUL.bind(null, this.seedScript, this.siteUrl, this.stopCount))
-    .then(replaceHtml.bind(null, htmlStrings, this.fileNames))
+    .then(replaceHtml.bind(null, htmlStrings, htmlFiles))
     .then(writeNewHtml.bind(null, this.htmlOutput))
 }
 
