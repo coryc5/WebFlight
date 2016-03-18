@@ -9,7 +9,12 @@
     "test-start": "node test/test-website/server.js"
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "ignore": [
+      "/test/tests/webflight.js",
+      "/test/tests/wf/seedUL.js",
+      "/test/test-website/"
+    ]
   },
   "repository": {
     "type": "git",

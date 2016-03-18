@@ -1,14 +1,11 @@
 /* global describe, it */
 'use strict'
-
-// Testing requirements
 const path = require('path')
-const $ = require('cheerio')
+const cheerio = require('cheerio')
 const chai = require('chai')
 let assert = chai.assert
 let expect = chai.expect
-// let should = chai.should
-// const chaiAsPromised = require('chai-as-promised')
+
 const chaifs = require('chai-fs')
 // chai.use(chaiAsPromised)
 chai.use(chaifs)
@@ -36,7 +33,6 @@ const wfOptions = {
 const stringifiedHtml = stringifyHtml(path.join(__dirname, 'index.html'))
 // const stringifiedHtmlArr = stringifyHtml([path.join(__dirname, 'index.html'), path.join(__dirname, 'about.html')])
 const filesObj = makeFilesObj(wfOptions.filesFolder, wfOptions.filesRoute)
-const fileNames = Object.keys(filesObj)
 const hashedObjFunc = hashFilesObj(filesObj)
 
 // Testing begins
@@ -55,6 +51,7 @@ describe('stringifyHtml', () => {
 describe('makeFilesObj', function () {
   it('should return array of files in directory', function () {
     const array = makeFilesObj(path.join(__dirname + '/test-dir'), 'files/')
+
     assert.deepEqual({
       'files/fun.jpg': {fileOnServer: `${__dirname}/test-dir/fun.jpg`},
       'files/laughter.html': {fileOnServer: `${__dirname}/test-dir/laughter.html`},
@@ -176,7 +173,7 @@ describe('writeJsUL', () => {
     })
   })
 })
-// // don't check if ALL src tags are removed (e.g. imgur)
+
 describe('replaceHtml', () => {
   it('WebTorrent and WebFlight scripts should be appended to page', () => {
     return hashedObjFunc.then((hashedObj) => {
@@ -186,9 +183,15 @@ describe('replaceHtml', () => {
       expect(replacedString).to.not.include('undefined')
     })
   })
-  it('html should not contain any source attributes', () => {
-    let source = $('img').attr('src')
-    console.log(source)
+  it('content with hash classes should not contain source attributes', () => {
+    return hashedObjFunc.then((hashedObj) => {
+      let replacedString = replaceHtml(stringifiedHtml, wfOptions.htmlOutput, hashedObj)
+      const $ = cheerio.load(replacedString)
+      const bird1Tag = $(`.${hashedObj['img/bird1.jpg'].hash}`).attr('src')
+      const bird2Tag = $(`.${hashedObj['img/bird2.jpg'].hash}`).attr('src')
+      expect(bird1Tag).to.be.an('undefined')
+      expect(bird2Tag).to.be.an('undefined')
+    })
   })
   it('html should contain all file hashes as class names', () => {
     return hashedObjFunc.then((hashedObj) => {
@@ -198,13 +201,3 @@ describe('replaceHtml', () => {
     })
   })
 })
-//
-// describe('writeNewHtml', () => {
-//   it('', () => {
-//   })
-// })
-//
-// describe('botGenerator', () => {
-//   it('', () => {
-//   })
-// })
