@@ -1,3 +1,50 @@
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+
 # WebFlight
 
-WebFlight enables the users visiting a site to serve the content of that site. 
+
+WebFlight enables the users visiting a site to serve the content of that site. P2P content sharing technology powered by [WebTorrent](https://webtorrent.io).
+
+### Install
+
+```
+npm install webflight
+```
+## WebFlight API
+
+### Usage
+
+It's easy to incorporate WebFlight into your existing site. Just provide us with a few details on where to find the assets you want to seed, and we'll take care of the rest.
+
+#### Initialize WebFlight
+
+```
+const WebFlight = require('webflight')
+
+const wf = new WebFlight(options)
+
+wf.init()
+```
+
+##### Options
+
+```siteUrl``` - Your website url
+<br>```assetsPath``` - The absolute path(s) to the folder(s) containing your assets
+<br>```assetsRoute``` - The server route(s) to your assets
+<br>```routes: { '/route': '/path/to/route.html' }``` - The routes and corresponding paths to your html files
+<br>```userCount``` - The number of simultaneous users on your site at which WebFlight will begin to send subsequent users to the peer-hosted version of your site
+<br>```wfPath``` - The folder WebFlight files will appear in
+<br>```wfRoute``` - The route that retrieves WebFlight files
+<br>```seedScript``` - The script that will initialize seeding your assets so they're ready to be downloaded by users after the **userCount** threshold is passed
+```
+{
+  siteURL: String             // Required
+  assetsPath: String|Array    // Required
+  assetsRoute: String|Array   // Required
+  routes: Object              // Required
+  userCount: Number           // Optional - defaults to 10
+  wfPath: String              // Optional - defaults to '/wfPath'
+  wfRoute: String             // Optional - defaults to '/wfRoute'
+  seedScript: String          // Optional = defaults to 'wf-seed.js'
+}
+```
