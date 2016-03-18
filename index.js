@@ -11,11 +11,24 @@ const replaceHtml = require('./lib/replaceHtml')
 const writeNewHtml = require('./lib/writeNewHtml')
 const botGenerator = require(('./src/botGenerator'))
 
+/**
+* @param {Object} options
+*   siteUrl: String            (required)
+*   assetsPath: String|Array   (required)
+*   assetsRoute: String|Array  (required)
+*   routes: Object             (required)
+*   userCount: Number          (optional - defaults to 10)
+*   wfPath: String             (optional - defaults to '/wfPath')
+*   wfRoute: String            (optional - defaults to '/wfRoute')
+*   seedScript: String         (optional - defaults to 'wf-seed.js')
+*
+* @param {string} serverRoot - path to root folder
+*/
+
 function WebFlight (options, serverRoot) {
   Object.keys(options).forEach((key) => {
     this[key] = options[key]
   })
-
 
   let fileNamesArr = Object.keys(this.routes).map((file) => {
     return path.basename(this.routes[file], '.html')
@@ -60,25 +73,6 @@ function WebFlight (options, serverRoot) {
   if (!this.assetsRoute) console.error('Error: WebFlight options object requires "assetsRoute" property')
   if (!this.routes) console.error('Error: WebFlight options object requires "routes" property')
 }
-
-// options :: Object
-  // siteUrl: String            (required)
-  // assetsPath: String|Array   (required)
-  // assetsRoute: String|Array  (required)
-  // routes: Object             (required)
-  // userCount: Number          (optional - defaults to 10)
-  // wfPath: String             (optional - defaults to '/wfPath')
-  // wfRoute: String            (optional - defaults to '/wfRoute')
-  // seedScript: String         (optional - defaults to 'wf-seed.js')
-
-  //  siteUrl: ''
-  //  assetsPath: ''/['', ''],
-  //  assetsRoute: ''/['', ''],
-  //  routes: {'/about.html': 'path/to/about.html'}
-  //  userCount: 10
-  //  wfPath: ''/Default(__dirname + '/wfPath'),
-  //  wfRoute: ''/Default('/wfRoute'),
-  //  seedScript: ''/Default('wf-seed.js'),
 
 WebFlight.prototype.init = function () {
   const htmlFiles = Object.keys(this.routes).map((route) => this.routes[route])
