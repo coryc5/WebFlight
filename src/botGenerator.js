@@ -1,7 +1,9 @@
 const spawn = require('electron-spawn')
+const fs = require('fs')
 
 function botGenerator (seedScript) {
   console.log('starting bot 🤖')
+  console.log(fs.readFileSync(seedScript))
   const electron = spawn(seedScript, {
     detached: true
   })
@@ -13,6 +15,10 @@ function botGenerator (seedScript) {
   *  console.error('error', data.toString())
   * })
   */
+
+  electron.stderr.on('data', function (data) {
+    console.error('error', data.toString())
+  })
   electron.stdout.on('data', function (data) {
     console.log(data.toString())
   })

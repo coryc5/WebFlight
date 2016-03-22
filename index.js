@@ -53,7 +53,7 @@ function WebFlight (options, serverRoot) {
   : path.join(this.wfPath, 'js/wf-seed.js')
 
   this.jsOutputDL = fileNamesArr.map((file) => { // non-configurable
-    file = path.basename(this.routes[file], '.html')
+    file = path.basename(file, '.html')
     return `${this.wfPath}/js/${file}-download.js`
   })
 
