@@ -106,7 +106,7 @@ WebFlight.prototype.watch = function (req, res, next) {
   if (path.extname(destination) === '.html' || path.extname(destination) === '') {
     console.log(++this.count, 'entering')
 
-    setTimeout(function () { console.log(--this.count, 'exiting') }.bind(this), 10000)
+    setTimeout(function () { console.log(--this.count, 'exiting') }.bind(this), 20000)
   }
 
   if (destination === '/count.check.4wf') return res.send({count: this.count})
