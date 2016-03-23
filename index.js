@@ -2,6 +2,7 @@
 
 const fs = require('fs')
 const path = require('path')
+const child_process = require('child_process')
 
 const stringifyHtmlFiles = require('./lib/stringifyHtmlFiles')
 const makeFilesObj = require('./lib/makeFilesObj')
@@ -97,6 +98,9 @@ WebFlight.prototype.redirect = function (req, res, next) {
 }
 
 WebFlight.prototype.start = function () {
+  child_process.exec('export DISPLAY=\'0:99\'')
+  child_process.exec('Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &')
+
   botGenerator(this.seedScript)
 
   this.active = true
