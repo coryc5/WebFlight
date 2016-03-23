@@ -3,7 +3,6 @@ const fs = require('fs')
 
 function botGenerator (seedScript) {
   console.log('starting bot 🤖')
-  console.log(fs.readFileSync(seedScript))
   const electron = spawn(seedScript, {
     detached: true
   })
