@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "standard && mocha test/tests/wfstart.js",
-    "start": "node server/server.js",
+    "test-mocha": "mocha test/tests/wfstart.js",
     "test-start": "node test/test-website/server.js"
   },
   "standard": {
