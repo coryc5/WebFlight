@@ -11,7 +11,7 @@ const chaifs = require('chai-fs')
 chai.use(chaifs)
 
 // Functions being tested
-const stringifyHtml = require('../../lib/stringifyHtml')
+const stringifyHtml = require('../../lib/stringifyHtmlFiles')
 const makeFilesObj = require('../../lib/makeFilesObj')
 const hashFilesObj = require('../../lib/hashFilesObj')
 const writeJsDL = require('../../lib/writeJsDL')
