@@ -5,7 +5,7 @@ const path = require('path')
 const child_process = require('child_process')
 
 const stringifyHtmlFiles = require('./lib/stringifyHtmlFiles')
-const makeFilesObj = require('./lib/makeFilesObj')
+const createFilesObj = require('./lib/createFilesObj')
 const hashFilesObj = require('./lib/hashFilesObj')
 const writeJsUL = require('./lib/writeJsUL')
 const replaceHtml = require('./lib/replaceHtml')
@@ -80,7 +80,7 @@ WebFlight.prototype.init = function () {
     return this.routes[route]
   })
   const htmlStrings = stringifyHtmlFiles(htmlFiles)
-  const filesObj = makeFilesObj(this.assetsPath, this.assetsRoute)
+  const filesObj = createFilesObj(this.assetsPath, this.assetsRoute)
 
   if (this.statusBar) {
     hashFilesObj(filesObj)
