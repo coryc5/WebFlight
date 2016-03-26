@@ -7,18 +7,18 @@ const path = require('path')
 const chai = require('chai')
 const assert = chai.assert
 
-const makeFilesObj = require('../../lib/makeFilesObj')
+const createFilesObj = require('../../lib/createFilesObj')
 const sampleFilesObj = require('../fixtures/filesObj')
-const filesObj = makeFilesObj([path.join(__dirname, '../fixtures/imgs')], ['imgs/'])
+const filesObj = createFilesObj([path.join(__dirname, '../fixtures/imgs')], ['imgs/'])
 const keys = Object.keys(filesObj)
 
-describe('makeFilesObj', () => {
+describe('createFilesObj', () => {
   it('should return an object', () => {
     assert.equal(filesObj.constructor, Object)
   })
 
   it('should handle directory being a string', () => {
-    assert.equal(makeFilesObj(path.join(__dirname, '../fixtures/imgs'), ['imgs/']).constructor, Object)
+    assert.equal(createFilesObj(path.join(__dirname, '../fixtures/imgs'), ['imgs/']).constructor, Object)
   })
 
   it('should return an object with n (files * routes) keys', () => {
