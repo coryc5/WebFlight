@@ -11,9 +11,8 @@
   "standard": {
     "parser": "babel-eslint",
     "ignore": [
-      "/test/tests/webflight.js",
-      "/test/tests/wf/seedUL.js",
-      "/test/test-website/"
+      "/test/fixtures/*",
+      "/test/tests/wfstart.js"
     ]
   },
   "repository": {
