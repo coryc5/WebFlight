@@ -1,5 +1,8 @@
-const opts1 = require('../fixtures/opts').wfOptions1
+const options = require('../fixtures/opts').opts4
 const stringifyFiles = require('../../lib/stringifyFiles')
+
+const stringifiedFiles = stringifyFiles(options.assetsPath)
+console.log(options)
 
 describe('stringifyFiles', () => {
   it('output should not equal path', () => {
@@ -12,4 +15,3 @@ describe('stringifyFiles', () => {
     // expect(stringifiedHtmlArr).to.be.a('array')
   })
 })
-
