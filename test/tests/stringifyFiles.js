@@ -1,20 +1,18 @@
 /* global describe, it */
-
+'use strict'
 const opts1 = require('../fixtures/opts').opts1
 const stringifyFiles = require('../../lib/stringifyFiles')
 const chai = require('chai')
-let assert = chai.assert
 let expect = chai.expect
 
 describe('stringifyFiles', () => {
-  it('output should not equal path', () => {
-    assert.notEqual(wfOptions.originalHtml, stringifiedHtml)
+  it('should output an array', () => {
+    let output = stringifyFiles([opts1.routes['/'], opts1.routes['/how.html']])
+    expect(output).to.be.an('array')
   })
-  it('should return an array of length 1 string if single input', () => {
-    expect(stringifiedHtml).to.be.a('string')
-  })
-  it('should return an array if multiple inputs', () => {
-    // expect(stringifiedHtmlArr).to.be.a('array')
+  it('should output an array of strings', () => {
+    let output = stringifyFiles([opts1.routes['/'], opts1.routes['/how.html']])
+    expect(output[0]).to.be.an('string')
   })
 })
 
