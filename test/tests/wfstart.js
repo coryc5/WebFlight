@@ -12,7 +12,7 @@ chai.use(chaifs)
 
 // Functions being tested
 const stringifyHtml = require('../../lib/stringifyHtmlFiles')
-const makeFilesObj = require('../../lib/makeFilesObj')
+const createFilesObj = require('../../lib/createFilesObj')
 const hashFilesObj = require('../../lib/hashFilesObj')
 const writeJsDL = require('../../lib/writeJsDL')
 const writeJsUL = require('../../lib/writeJsUL')
@@ -32,7 +32,7 @@ const wfOptions = {
 // Testing variables
 const stringifiedHtml = stringifyHtml(path.join(__dirname, 'index.html'))
 // const stringifiedHtmlArr = stringifyHtml([path.join(__dirname, 'index.html'), path.join(__dirname, 'about.html')])
-const filesObj = makeFilesObj(wfOptions.filesFolder, wfOptions.filesRoute)
+const filesObj = createFilesObj(wfOptions.filesFolder, wfOptions.filesRoute)
 const hashedObjFunc = hashFilesObj(filesObj)
 
 // Testing begins
@@ -48,108 +48,11 @@ describe('stringifyHtml', () => {
   })
 })
 
-describe('makeFilesObj', function () {
-  it('should return array of files in directory', function () {
-    const array = makeFilesObj(path.join(__dirname + '/test-dir'), 'files/')
 
-    assert.deepEqual({
-      'files/index.html': {fileOnServer: `${__dirname}/test-dir/index.html`},
-      'files/index2.html': {fileOnServer: `${__dirname}/test-dir/index2.html`}
-    }, array)
-  })
-  it('should work with array of directories and single route', function () {
-    const filesObj = makeFilesObj([path.join(__dirname, '/test-dir2'), path.join(__dirname, '/test-dir')], '/files')
 
-    assert.deepEqual({
-      'files/webtorrent-breaks-if-folder-is-empty': {fileOnServer: `${__dirname}/test-dir2/webtorrent-breaks-if-folder-is-empty`},
-      'files/t.txt': {fileOnServer: `${__dirname}/test-dir2/t.txt`},
-      'files/index.html': {fileOnServer: `${__dirname}/test-dir/index.html`},
-      'files/index2.html': {fileOnServer: `${__dirname}/test-dir/index2.html`}
-    }, filesObj)
-  })
 
-  it('should work with array of directories and array of routes', function () {
-    const filesObj = makeFilesObj([path.join(__dirname, '/test-dir2'), path.join(__dirname, '/test-dir')], ['/files', '/img'])
 
-    assert.deepEqual({
-      'files/webtorrent-breaks-if-folder-is-empty': {fileOnServer: `${__dirname}/test-dir2/webtorrent-breaks-if-folder-is-empty`},
-      'files/t.txt': {fileOnServer: `${__dirname}/test-dir2/t.txt`},
-      'files/index.html': {fileOnServer: `${__dirname}/test-dir/index.html`},
-      'files/index2.html': {fileOnServer: `${__dirname}/test-dir/index2.html`},
-      'img/webtorrent-breaks-if-folder-is-empty': {fileOnServer: `${__dirname}/test-dir2/webtorrent-breaks-if-folder-is-empty`},
-      'img/t.txt': {fileOnServer: `${__dirname}/test-dir2/t.txt`},
-      'img/index.html': {fileOnServer: `${__dirname}/test-dir/index.html`},
-      'img/index2.html': {fileOnServer: `${__dirname}/test-dir/index2.html`}
-    }, filesObj)
-  })
-})
 
-describe('hashFilesObj', () => {
-  it('expect hashedObj to have correct keys', () => {
-    const hashedObjFunc = hashFilesObj(filesObj)
-    return hashedObjFunc.then((hashedObj) => {
-      for (var info in hashedObj) {
-        expect(hashedObj[info]).to.have.all.keys('hash', 'magnet', 'fileOnServer')
-      }
-    })
-  })
-  it('should return a promise', () => {
-    assert.equal(hashFilesObj(filesObj).constructor, Promise)
-  })
-  it('promise should return an object', (done) => {
-    hashFilesObj(filesObj).then((result) => {
-      assert.equal(result.constructor, Object)
-      done()
-    })
-  })
-  it('every property on object should be an object', (done) => {
-    hashFilesObj(filesObj).then((result) => {
-      assert.equal(Object.keys(result).every((key) => {
-        return result[key].constructor === Object
-      }), true)
-      done()
-    })
-  })
-  it('every property object should have a hash property', (done) => {
-    hashFilesObj(filesObj).then((result) => {
-      assert.equal(Object.keys(result).every((key) => {
-        return result[key].hasOwnProperty('hash')
-      }), true)
-      done()
-    })
-  })
-  it('every property object should have a magnet property', (done) => {
-    hashFilesObj(filesObj).then((result) => {
-      assert.equal(Object.keys(result).every((key) => {
-        return result[key].hasOwnProperty('magnet')
-      }), true)
-      done()
-    })
-  })
-})
-
-describe('writeJsDL', () => {
-  const wfFile = wfOptions.jsOutputDL
-  const wfFileString = stringifyHtml(wfFile)
-  it('output (webflight.js) file is created', () => {
-    return hashedObjFunc.then((hashedObj) => {
-      writeJsDL(wfFile, hashedObj)
-      assert.isFile(wfFile)
-    })
-  })
-  it('file should "client.add" all files in obj', () => {
-    expect(wfFileString).to.include('client.add')
-    expect(wfFileString).to.not.include('undefined')
-  })
-  it('file should contain all magnet uris and hashes', () => {
-    return hashedObjFunc.then((hashedObj) => {
-      for (let file in hashedObj) {
-        expect(wfFileString).to.include(hashedObj[file].magnet)
-        expect(wfFileString).to.include(hashedObj[file].hash)
-      }
-    })
-  })
-})
 // check if option is undefined
 describe('writeJsUL', () => {
   const ULFile = wfOptions.jsOutputUL
