@@ -41,7 +41,7 @@ function WebFlight (options, serverRoot) {
   this.active = false // non-configurable
   this.fileNames = fileNamesArr // non-configurable
 
-  this.wfPath = options.wfPath ? options.wfPath : path.join(serverRoot, '/wfPath')  // default
+  this.wfPath = options.wfPath || path.join(serverRoot, '/wfPath')  // default
 
   // TODO: existsSync is deprecated, need alternative
   if (!fs.existsSync(this.wfPath)) {
@@ -49,11 +49,9 @@ function WebFlight (options, serverRoot) {
     fs.mkdirSync(path.join(this.wfPath, 'js'))
   }
 
-  this.wfRoute = options.wfRoute ? options.wfRoute : ('/wfRoute')  // default
+  this.wfRoute = options.wfRoute || ('/wfRoute')  // default
 
-  this.seedScript = options.seedScript  // default
-  ? options.seedScript
-  : path.join(this.wfPath, 'js/wf-seed.js')
+  this.seedScript = options.seedScript || path.join(this.wfPath, 'js/wf-seed.js')  // default
 
   this.jsOutputDL = fileNamesArr.map((file) => { // non-configurable
     file = path.basename(file, '.html')
@@ -64,7 +62,7 @@ function WebFlight (options, serverRoot) {
     return `${this.wfPath}/wf-${file}`
   })
 
-  this.userCount = options.userCount ? options.userCount : 5  // default (redirect)
+  this.userCount = options.userCount || 5  // default (redirect)
   this.prepCount = Math.floor(this.userCount * 0.75)  // non-configurable (start bots)
   this.stopCount = Math.floor(this.userCount * 0.50)  // non-configurable (kill bots, redirect back)
 
@@ -78,26 +76,19 @@ function WebFlight (options, serverRoot) {
 }
 
 WebFlight.prototype.init = function () {
-  if (this.statusBar) {
-    const htmlFiles = Object.keys(this.routes).map((route) => {
-      return this.routes[route]
-    })
-    const htmlStrings = stringifyHtmlFiles(htmlFiles)
-    const filesObj = makeFilesObj(this.assetsPath, this.assetsRoute)
+  const htmlFiles = Object.keys(this.routes).map((route) => {
+    return this.routes[route]
+  })
+  const htmlStrings = stringifyHtmlFiles(htmlFiles)
+  const filesObj = makeFilesObj(this.assetsPath, this.assetsRoute)
 
+  if (this.statusBar) {
     hashFilesObj(filesObj)
     .then(writeJsUL.bind(null, this.seedScript, this.siteUrl, this.stopCount))
     .then(replaceHtml.bind(null, htmlStrings, htmlFiles))
-    // --BELOW: the new script to add items
     .then(addStatusBar.bind(null))
     .then(writeNewHtml.bind(null, this.htmlOutput))
-  } else { // BELOW: previous version
-    const htmlFiles = Object.keys(this.routes).map((route) => {
-      return this.routes[route]
-    })
-    const htmlStrings = stringifyHtmlFiles(htmlFiles)
-    const filesObj = makeFilesObj(this.assetsPath, this.assetsRoute)
-
+  } else {
     hashFilesObj(filesObj)
     .then(writeJsUL.bind(null, this.seedScript, this.siteUrl, this.stopCount))
     .then(replaceHtml.bind(null, htmlStrings, htmlFiles))
