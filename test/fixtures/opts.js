@@ -1,40 +1,21 @@
 const path = require('path')
 
 module.exports = {
-  // opts1: {
-  //   originalHtml: path.join(__dirname, 'index.html'),
-  //   filesFolder: path.join(__dirname, 'img'),
-  //   filesRoute: 'img/',
-  //   jsOutputDL: path.join(__dirname, 'webflight.js'),
-  //   jsOutputUL: path.join(__dirname, 'wf/seedUL.js'),
-  //   htmlOutput: path.join(__dirname, 'wf/index.html'),
-  //   route: '/'
-  // },
-  // opts2:  {
-  //   originalHtml: path.join(__dirname, 'index.html'),
-  //   filesFolder: path.join(__dirname, 'img'),
-  //   filesRoute: 'img/',
-  //   jsOutputDL: path.join(__dirname, 'webflight.js'),
-  //   jsOutputUL: path.join(__dirname, 'wf/seedUL.js'),
-  //   htmlOutput: path.join(__dirname, 'wf/index.html'),
-  //   route: '/'
-  // },
-  // opts3: {
-  //   originalHtml: path.join(__dirname, 'index.html'),
-  //   filesFolder: path.join(__dirname, 'img'),
-  //   filesRoute: 'img/',
-  //   jsOutputDL: path.join(__dirname, 'webflight.js'),
-  //   jsOutputUL: path.join(__dirname, 'wf/seedUL.js'),
-  //   htmlOutput: path.join(__dirname, 'wf/index.html'),
-  //   route: '/'
-  // },
-  opts4: {
+  opts1: {
     siteUrl: 'http://localhost:3000',
-    assetsPath: [path.join(__dirname, 'img'), path.join(__dirname, 'videos')],
+    assetsPath: [path.join(__dirname, 'test-website/img'), path.join(__dirname, 'test-website/videos')],
     assetsRoute: ['bird-imgs/', 'bird-videos/', 'other-imgs/'],
     routes: {
-      '/': path.join(__dirname, 'index.html'),
-      '/how.html': path.join(__dirname, 'how.html')
+      '/': path.join(__dirname, 'test-website/index.html'),
+      '/how.html': path.join(__dirname, 'test-website/how.html')
+    }
+  },
+  opts2: {
+    siteUrl: 'http://localhost:3000',
+    assetsPath: [path.join(__dirname, 'test-dir'), path.join(__dirname, 'test-dir2')],
+    assetsRoute: ['info/'],
+    routes: {
+      '/': path.join(__dirname, 'test-dir/index.html')
     }
   }
 }
