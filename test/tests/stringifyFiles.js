@@ -1,5 +1,10 @@
-const opts1 = require('../fixtures/opts').wfOptions1
+/* global describe, it */
+
+const opts1 = require('../fixtures/opts').opts1
 const stringifyFiles = require('../../lib/stringifyFiles')
+const chai = require('chai')
+let assert = chai.assert
+let expect = chai.expect
 
 describe('stringifyFiles', () => {
   it('output should not equal path', () => {
