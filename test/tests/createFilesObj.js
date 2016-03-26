@@ -9,7 +9,7 @@ const assert = chai.assert
 
 const createFilesObj = require('../../lib/createFilesObj')
 const sampleFilesObj = require('../fixtures/filesObj')
-const filesObj = createFilesObj([path.join(__dirname, '../fixtures/imgs')], ['imgs/'])
+const filesObj = createFilesObj([path.join(__dirname, '../fixtures/imgs')], ['../imgs/'])
 const keys = Object.keys(filesObj)
 
 describe('createFilesObj', () => {
@@ -18,12 +18,12 @@ describe('createFilesObj', () => {
   })
 
   it('should handle directory being a string', () => {
-    assert.equal(createFilesObj(path.join(__dirname, '../fixtures/imgs'), ['imgs/']).constructor, Object)
+    assert.equal(createFilesObj(path.join(__dirname, '../fixtures/imgs'), ['../imgs/']).constructor, Object)
   })
 
   it('should return an object with n (files * routes) keys', () => {
     const files = fs.readdirSync(path.join(__dirname, '../fixtures/imgs')).length
-    const routes = ['imgs/'].length
+    const routes = ['../imgs/'].length
     const n = files * routes
 
     assert.equal(keys.length, n)
