@@ -35,25 +35,23 @@ const stringifiedHtml = stringifyHtml(path.join(__dirname, 'index.html'))
 const filesObj = createFilesObj(wfOptions.filesFolder, wfOptions.filesRoute)
 const hashedObjFunc = hashFilesObj(filesObj)
 
-// Testing begins
-describe('stringifyHtml', () => {
-  it('output should not equal path', () => {
-    assert.notEqual(wfOptions.originalHtml, stringifiedHtml)
-  })
-  it('should return a string if single input', () => {
-    expect(stringifiedHtml).to.be.a('string')
-  })
-  it('should return an array if multiple inputs', () => {
-    // expect(stringifiedHtmlArr).to.be.a('array')
-  })
-})
+/**
+ *  DONE AND MOVED TO SEPARATE FILE
+ describe('stringifyHtml', () => {
+   it('output should not equal path', () => {
+     assert.notEqual(wfOptions.originalHtml, stringifiedHtml)
+   })
+   it('should return a string if single input', () => {
+     expect(stringifiedHtml).to.be.a('string')
+   })
+   it('should return an array if multiple inputs', () => {
+     // expect(stringifiedHtmlArr).to.be.a('array')
+   })
+ })
+ */
 
-
-
-
-
-
-// check if option is undefined
+/** DONE AND MOVED TO SEPARATE FILE
+check if option is undefined
 describe('writeJsUL', () => {
   const ULFile = wfOptions.jsOutputUL
   const ULFileString = stringifyHtml(ULFile)
@@ -75,6 +73,7 @@ describe('writeJsUL', () => {
     })
   })
 })
+*/
 
 describe('replaceHtml', () => {
   it('WebTorrent and WebFlight scripts should be appended to page', () => {
