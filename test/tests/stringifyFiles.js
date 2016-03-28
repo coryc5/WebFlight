@@ -24,7 +24,7 @@ describe('stringifyFiles', () => {
     expect(htmlFiles).to.be.a('array')
   })
   it('should return an array of the same length as the input', () => {
-    expect(htmlFile.length).to.equal(singleHtml.length);
+    expect(htmlFile.length).to.equal(singleHtml.length)
     expect(htmlFiles.length).to.equal(manyHtml.length)
   })
   it('each index of array output should be a string', () => {
