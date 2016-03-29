@@ -2,8 +2,8 @@ const express = require('express')
 const app = express()
 
 const path = require('path')
-const WebFlight = require('../..')
-
+const WebFlight = require('/Users/carolgonzalez/Desktop/WebFlight/index.js')
+//app.set('view engine', 'ejs');
 const wfObj = {
   siteUrl: 'http://localhost:3000',
   assetsPath: [path.join(__dirname, 'img'), path.join(__dirname, 'videos')],
@@ -21,7 +21,7 @@ wf.init()
 app.use(wf.watch.bind(wf))
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/index.html'))
+   res.sendFile(path.join(__dirname, 'index.html'))
 })
 
 app.get('/bird-imgs/:pic', (req, res) => {
