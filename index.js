@@ -98,17 +98,17 @@ WebFlight.prototype.init = function () {
     hashFilesObj(filesObj)
     .then(writeJsUL.bind(null, this.seedScript, this.siteUrl, this.stopCount))
     .then(replaceHtml.bind(null, htmlStrings, htmlFiles))
-    //.then(addStatusBar.bind(null))
+    .then(addStatusBar.bind(null))
     .then(uncommentingEJS.bind(null))
     .then(writeNewHtml.bind(null, this.htmlOutput))
-    console.log('this.htmlOutputs🖖', this.htmlOutput )
+    //console.log('this.htmlOutputs🖖', this.htmlOutput )
   } else {
     hashFilesObj(filesObj)
     .then(writeJsUL.bind(null, this.seedScript, this.siteUrl, this.stopCount))
     .then(replaceHtml.bind(null, htmlStrings, htmlFiles))
     .then(uncommentingEJS.bind(null))
     .then(writeNewHtml.bind(null, this.htmlOutput))
-    console.log('this.htmlOutput🖖', this.htmlOutput )
+    //console.log('this.htmlOutput🖖', this.htmlOutput )
   }
 }
 ////////////////
