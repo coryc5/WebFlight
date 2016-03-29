@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 
 const path = require('path')
-const WebFlight = require('/Users/carolgonzalez/Desktop/WebFlight/index.js')
+const WebFlight = require('../../../index.js')
 app.set('view engine', 'ejs');
 const wfObj = {
   siteUrl: 'http://localhost:3000',
@@ -21,6 +21,7 @@ wf.init()
 app.use(wf.watch.bind(wf))
 
 app.get('/', (req, res) => {
+  console.log('what is __dirname', __dirname);
    res.render(path.join(__dirname, 'simple.ejs'))
 })
 
