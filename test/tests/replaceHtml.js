@@ -7,10 +7,10 @@ const assert = chai.assert
 
 const replaceHtml = require('../../lib/replaceHtml')
 const htmlStrings = require('../fixtures/htmlStrings')
-const filesObj = require('../fixtures/filesObj')
+const hashObj = require('../fixtures/hashObj')
 const sampleNewHtml = require('../fixtures/newHtml.js')
 
-const newHtml = replaceHtml(htmlStrings, filesObj)
+const newHtml = replaceHtml(htmlStrings, hashObj)
 
 describe('replaceHtml', () => {
   it('should return an array', () => {
