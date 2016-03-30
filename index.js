@@ -13,6 +13,8 @@ const replaceHtml = require('./lib/replaceHtml')
 const addStatusBar = require('./lib/addStatusBar')
 const writeNewHtml = require('./lib/writeNewHtml')
 const startBots = require('./lib/startBots')
+const uncommentingEJS = require('./lib/uncommentingEJS')
+
 
 /**
 * @param {Object} options
@@ -80,11 +82,13 @@ WebFlight.prototype.init = function () {
     .then(writeSeedScript.bind(null, this.seedScript, this.siteUrl, this.stopCount))
     .then(replaceHtml.bind(null, htmlStrings))
     .then(addStatusBar.bind(null))
+    .then(uncommentingEJS.bind(null))
     .then(writeNewHtml.bind(null, this.htmlOutput))
   } else {
     hashSeedObj(seedObj)
     .then(writeSeedScript.bind(null, this.seedScript, this.siteUrl, this.stopCount))
     .then(replaceHtml.bind(null, htmlStrings))
+    .then(uncommentingEJS.bind(null))
     .then(writeNewHtml.bind(null, this.htmlOutput))
   }
 }

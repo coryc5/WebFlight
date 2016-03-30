@@ -8,19 +8,13 @@ client.seed(['/Users/corycaprice/Documents/Programming/Codesmith/WebFlight/test/
 
   console.log('🐣 ', torrent.files.map((file) => file.name).slice(0,3).join(', '), 'etc., now seeding at hash ', torrent.infoHash);
 
-  console.log(torrent.magnetURI)
-
   if (!totalSeeds) console.log('🕊 all seeds active')
 });
-
-
 
 client.seed(['/Users/corycaprice/Documents/Programming/Codesmith/WebFlight/test/fixtures/test-website/img/google.png'], function(torrent) {
   --totalSeeds;
 
   console.log('🐣 ', torrent.files.map((file) => file.name).slice(0,3).join(', '), 'etc., now seeding at hash ', torrent.infoHash);
-
-  console.log(torrent.magnetURI)
 
   if (!totalSeeds) console.log('🕊 all seeds active')
 });
