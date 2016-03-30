@@ -93,7 +93,7 @@ WebFlight.prototype.init = function () {
   const htmlStrings = stringifyFiles(htmlFiles)
   //console.log('htmlStrings😴',htmlStrings);
   const filesObj = createFilesObj(this.assetsPath, this.assetsRoute)
-
+console.log('filesobj', filesObj);
   if (this.statusBar) {
     hashFilesObj(filesObj)
     .then(writeJsUL.bind(null, this.seedScript, this.siteUrl, this.stopCount))
