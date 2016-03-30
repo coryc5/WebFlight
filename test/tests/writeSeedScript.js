@@ -26,6 +26,7 @@ describe('writeSeedScript', () => {
   it('should have n seeds', () => {
     writeSeedScript(output, url, stopCount, seedObj)
     const file = fs.readFileSync(output).toString()
+    // console.log('file😾',file);
     const nTest = file.includes(`var totalSeeds = ${n}`)
 
     assert.equal(nTest, true)
