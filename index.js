@@ -12,7 +12,7 @@ const writeSeedScript = require('./lib/writeSeedScript')
 const replaceHtml = require('./lib/replaceHtml')
 const addStatusBar = require('./lib/addStatusBar')
 const writeNewHtml = require('./lib/writeNewHtml')
-const botGenerator = require(('./src/botGenerator'))
+const startBots = require(('./lib/startBots'))
 
 /**
 * @param {Object} options
@@ -38,12 +38,6 @@ function WebFlight (options, serverRoot) {
     return path.basename(this.routes[file])
   })
 
-  // TODO: existsSync is deprecated, need alternative
-  if (!fs.existsSync(this.wfPath)) {
-    fs.mkdirSync(this.wfPath)
-    fs.mkdirSync(path.join(this.wfPath, 'js'))
-  }
-
   // defaults
   this.wfPath = options.wfPath || path.join(serverRoot, '/wfPath')
   this.wfRoute = options.wfRoute || '/wfRoute'
@@ -58,6 +52,12 @@ function WebFlight (options, serverRoot) {
   this.htmlOutput = fileNamesArr.map((file) => `${this.wfPath}/wf-${file}`)
   this.prepCount = Math.floor(this.userCount * 0.75)
   this.stopCount = Math.floor(this.userCount * 0.50)
+
+  // TODO: existsSync is deprecated, need alternative
+  if (!fs.existsSync(this.wfPath)) {
+    fs.mkdirSync(this.wfPath)
+    fs.mkdirSync(path.join(this.wfPath, 'js'))
+  }
 
   // errors
   if (!this.siteUrl) console.error('Error: WebFlight options object requires "siteUrl" property')
@@ -77,13 +77,13 @@ WebFlight.prototype.init = function () {
   if (this.statusBar) {
     hashSeedObj(seedObj)
     .then(writeSeedScript.bind(null, this.seedScript, this.siteUrl, this.stopCount))
-    .then(replaceHtml.bind(null, htmlStrings, htmlFiles))
+    .then(replaceHtml.bind(null, htmlStrings))
     .then(addStatusBar.bind(null))
     .then(writeNewHtml.bind(null, this.htmlOutput))
   } else {
     hashSeedObj(seedObj)
     .then(writeSeedScript.bind(null, this.seedScript, this.siteUrl, this.stopCount))
-    .then(replaceHtml.bind(null, htmlStrings, htmlFiles))
+    .then(replaceHtml.bind(null, htmlStrings))
     .then(writeNewHtml.bind(null, this.htmlOutput))
   }
 }
@@ -103,7 +103,7 @@ WebFlight.prototype.start = function () {
   child_process.exec('export DISPLAY=\'0:99\'')
   child_process.exec('Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &')
 
-  botGenerator(this.seedScript)
+  startBots(this.seedScript)
 
   this.active = true
 }
