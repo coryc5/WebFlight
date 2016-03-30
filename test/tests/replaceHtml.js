@@ -26,6 +26,7 @@ describe('replaceHtml', () => {
   })
 
   it('inner array should return expected array of strings', () => {
+    console.log('new html[0]', newHtml[0])
     assert.deepEqual(newHtml[0], sampleNewHtml)
   })
 })

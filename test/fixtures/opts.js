@@ -15,7 +15,7 @@ module.exports = {
     assetsPath: [path.join(__dirname, 'test-dir'), path.join(__dirname, 'test-dir2')],
     assetsRoute: ['info/'],
     routes: {
-      '/': path.join(__dirname, 'test-dir/index.html')
+      '/': path.join(__dirname, 'test-website/index.html')
     }
   }
 }
