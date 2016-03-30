@@ -5,7 +5,8 @@ module.exports = {
     paths:
       [ path.join(__dirname, 'imgs/google.png'),
         path.join(__dirname, 'imgs/apple.png'),
-        path.join(__dirname, 'imgs/netflix.png') ],
+        path.join(__dirname, 'imgs/netflix.png')
+      ],
     srcs:
       [ '../imgs/google.png',
         '../imgs/apple.png',

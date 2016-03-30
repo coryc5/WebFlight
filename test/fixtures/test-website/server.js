@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 
 const path = require('path')
-const WebFlight = require('../..')
+const WebFlight = require('../../..')
 
 const wfObj = {
   siteUrl: 'http://localhost:3000',
@@ -36,8 +36,6 @@ app.get('/bird-videos/:video', (req, res) => {
   res.sendFile(path.join(__dirname, 'videos', req.params.video))
 })
 
-
-
 app.listen(3000, () => {
-  console.log('listening')
+  console.log('listening on 3000')
 })

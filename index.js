@@ -12,7 +12,7 @@ const writeSeedScript = require('./lib/writeSeedScript')
 const replaceHtml = require('./lib/replaceHtml')
 const addStatusBar = require('./lib/addStatusBar')
 const writeNewHtml = require('./lib/writeNewHtml')
-const startBots = require(('./lib/startBots'))
+const startBots = require('./lib/startBots')
 
 /**
 * @param {Object} options
@@ -60,10 +60,11 @@ function WebFlight (options, serverRoot) {
   }
 
   // errors
-  if (!this.siteUrl) console.error('Error: WebFlight options object requires "siteUrl" property')
-  if (!this.assetsPath) console.error('Error: WebFlight options object requires "assetsPath" property')
-  if (!this.assetsRoute) console.error('Error: WebFlight options object requires "assetsRoute" property')
-  if (!this.routes) console.error('Error: WebFlight options object requires "routes" property')
+  if (!this.siteUrl) showError('siteUrl')
+  if (!this.assetsPath) showError('assetsPath')
+  if (!this.assetsRoute) showError('assetsRoute')
+  if (!this.routes) showError('routes')
+  if (!options) showError('options')
 }
 
 WebFlight.prototype.init = function () {
@@ -130,6 +131,11 @@ WebFlight.prototype.watch = function (req, res, next) {
   if (this.count > this.userCount) return this.redirect(req, res, next)
 
   next()
+}
+
+function showError (input) {
+  if (input === 'options') console.error('Error: You must enter an options object')
+  else console.log(`Error: WebFlight options object requires "${input}" property`)
 }
 
 module.exports = WebFlight
