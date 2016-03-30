@@ -6,7 +6,7 @@
   "scripts": {
     "test": "standard && mocha test/tests",
     "test-mocha": "mocha test/tests/wfstart.js",
-    "test-start": "node test/test-website/server.js"
+    "test-start": "node test/fixtures/test-website/server.js"
   },
   "standard": {
     "parser": "babel-eslint",
@@ -34,6 +34,7 @@
     "expect": "^1.15.2",
     "express": "^4.13.4",
     "jquery": "^2.2.1",
+    "lodash": "^4.6.1",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1",
     "parse-torrent": "^5.7.3",

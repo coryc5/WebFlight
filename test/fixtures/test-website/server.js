@@ -4,6 +4,7 @@ const app = express()
 const path = require('path')
 const WebFlight = require('../../../index.js')
 app.set('view engine', 'ejs');
+
 const wfObj = {
   siteUrl: 'http://localhost:3000',
   assetsPath: [path.join(__dirname, 'img'), path.join(__dirname, 'videos')],
@@ -37,8 +38,6 @@ app.get('/bird-videos/:video', (req, res) => {
   res.sendFile(path.join(__dirname, 'videos', req.params.video))
 })
 
-
-
 app.listen(3000, () => {
-  console.log('listening')
+  console.log('listening on 3000')
 })

@@ -11,8 +11,9 @@ const writeJsUL = require('./lib/writeJsUL')
 const replaceHtml = require('./lib/replaceHtml')
 const addStatusBar = require('./lib/addStatusBar')
 const writeNewHtml = require('./lib/writeNewHtml')
-const botGenerator = require(('./lib/botGenerator'))
 const uncommentingEJS = require('./lib/uncommentingEJS')
+const botGenerator = require('./lib/botGenerator')
+
 
 /**
 * @param {Object} options
@@ -77,10 +78,11 @@ function WebFlight (options, serverRoot) {
   this.statusBar = options.statusBar || true // default
   console.log('😲wfobj', this)
 
-  if (!this.siteUrl) console.error('Error: WebFlight options object requires "siteUrl" property')
-  if (!this.assetsPath) console.error('Error: WebFlight options object requires "assetsPath" property')
-  if (!this.assetsRoute) console.error('Error: WebFlight options object requires "assetsRoute" property')
-  if (!this.routes) console.error('Error: WebFlight options object requires "routes" property')
+  if (!this.siteUrl) showError('siteUrl')
+  if (!this.assetsPath) showError('assetsPath')
+  if (!this.assetsRoute) showError('assetsRoute')
+  if (!this.routes) showError('routes')
+  if (!options) showError('options')
 }
 
 //////////////
@@ -91,9 +93,8 @@ WebFlight.prototype.init = function () {
     return this.routes[route]
   })
   const htmlStrings = stringifyFiles(htmlFiles)
-  //console.log('htmlStrings😴',htmlStrings);
   const filesObj = createFilesObj(this.assetsPath, this.assetsRoute)
-console.log('filesobj', filesObj);
+  console.log('filesobj😾', filesObj);
   if (this.statusBar) {
     hashFilesObj(filesObj)
     .then(writeJsUL.bind(null, this.seedScript, this.siteUrl, this.stopCount))
@@ -156,6 +157,11 @@ WebFlight.prototype.watch = function (req, res, next) {
   if (this.count > this.userCount) return this.redirect(req, res, next)
 
   next()
+}
+
+function showError (input) {
+  if (input === 'options') console.error('Error: You must enter an options object')
+  else console.log(`Error: WebFlight options object requires "${input}" property`)
 }
 
 module.exports = WebFlight
