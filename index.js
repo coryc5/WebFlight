@@ -14,7 +14,6 @@ const writeNewHtml = require('./lib/writeNewHtml')
 const uncommentingEJS = require('./lib/uncommentingEJS')
 const botGenerator = require('./lib/botGenerator')
 
-
 /**
 * @param {Object} options
 *   siteUrl: String            (required)
@@ -56,12 +55,12 @@ function WebFlight (options, serverRoot) {
   this.seedScript = options.seedScript || path.join(this.wfPath, 'js/wf-seed.js')  // default
 
   this.jsOutputDL = fileNamesArr.map((file) => { // non-configurable
-    //is the file on the the fileNamesArr html
-    if (path.extname(this.routes[file]) == '.html'){
+    // is the file on the the fileNamesArr html
+    if (path.extname(this.routes[file]) === '.html') {
       file = path.basename(this.routes[file], '.html')
       return `${this.wfPath}/js/${file}-download.js`
-    //if it's ejs
-  } else if (path.extname(this.routes[file]) == '.ejs'){
+    // if it's ejs
+    } else if (path.extname(this.routes[file]) === '.ejs') {
       file = path.basename(this.routes[file], '.ejs')
       return `${this.wfPath}/js/${file}-download.js`
     }
@@ -85,16 +84,16 @@ function WebFlight (options, serverRoot) {
   if (!options) showError('options')
 }
 
-//////////////
-//🏓INIT FUNC
-/////////////
+// ////////////
+// 🏓INIT FUNC
+// ///////////
 WebFlight.prototype.init = function () {
   const htmlFiles = Object.keys(this.routes).map((route) => {
     return this.routes[route]
   })
   const htmlStrings = stringifyFiles(htmlFiles)
   const filesObj = createFilesObj(this.assetsPath, this.assetsRoute)
-  console.log('filesobj😾', filesObj);
+  // console.log('htmlFiles😾', htmlFiles)
   if (this.statusBar) {
     hashFilesObj(filesObj)
     .then(writeJsUL.bind(null, this.seedScript, this.siteUrl, this.stopCount))
@@ -102,19 +101,19 @@ WebFlight.prototype.init = function () {
     .then(addStatusBar.bind(null))
     .then(uncommentingEJS.bind(null))
     .then(writeNewHtml.bind(null, this.htmlOutput))
-    //console.log('this.htmlOutputs🖖', this.htmlOutput )
+    // console.log('this.htmlOutputs🖖', this.htmlOutput )
   } else {
     hashFilesObj(filesObj)
     .then(writeJsUL.bind(null, this.seedScript, this.siteUrl, this.stopCount))
     .then(replaceHtml.bind(null, htmlStrings, htmlFiles))
     .then(uncommentingEJS.bind(null))
     .then(writeNewHtml.bind(null, this.htmlOutput))
-    //console.log('this.htmlOutput🖖', this.htmlOutput )
+    // console.log('this.htmlOutput🖖', this.htmlOutput )
   }
 }
-////////////////
-//🏓REDIRECT FUNC
-////////////////
+// //////////////
+// 🏓REDIRECT FUNC
+// //////////////
 WebFlight.prototype.redirect = function (req, res, next) {
   const destination = req.originalUrl
 
@@ -124,9 +123,9 @@ WebFlight.prototype.redirect = function (req, res, next) {
     next()
   }
 }
-////////////////
-//🏓START FUNC
-///////////////
+// //////////////
+// 🏓START FUNC
+// /////////////
 
 WebFlight.prototype.start = function () {
   child_process.exec('export DISPLAY=\'0:99\'')
@@ -136,9 +135,9 @@ WebFlight.prototype.start = function () {
 
   this.active = true
 }
-//////////////
-//🏓WATCH FUNC
-/////////////
+// ////////////
+// 🏓WATCH FUNC
+// ///////////
 WebFlight.prototype.watch = function (req, res, next) {
   const destination = req.originalUrl
 
