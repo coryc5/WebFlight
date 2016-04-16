@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>WebFlight - P2P Site Delivery</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="js/script.js"></script>
+
+</head>
+
+<body>
+  <div class="navbar">
+    <div id="title">WebFlight<sup><span id='beta'> alpha</span></sup></div>
+    <div class="nav-links">
+      <a href="https://www.github.com/Team-WebFlight/WebFlight" target="_blank">GitHub</a>
+      <a href="https://github.com/Team-WebFlight/WebFlight/blob/master/README.md" target="_blank">Docs</a>
+      <a href="#">Performance</a>
+      <a href="#">Demo</a>
+    </div>
+  </div>
+
+  <div id="webflight">Web<span id="meddon">Flight</span></div>
+  <div id="tagline">Static content is delivered through your peer network.</div>
+  <div id="gallery">
+    <div class="gallery-window">
+       <img class="big-pic" src="imgs/01.jpg" alt="">
+    </div>
+    <div class="gallery-window">
+      <img class="gallery-pic" src="imgs/01.jpg" alt="">
+      <img class="gallery-pic" src="imgs/02.jpg" alt="">
+      <img class="gallery-pic" src="imgs/03.jpg" alt="">
+      <img class="gallery-pic" src="imgs/04.jpg" alt="">
+      <img class="gallery-pic" src="imgs/05.jpg" alt="">
+      <img class="gallery-pic" src="imgs/06.jpg" alt="">
+      <img class="gallery-pic" src="imgs/07.jpg" alt="">
+      <img class="gallery-pic" src="imgs/08.jpg" alt="">
+      <img class="gallery-pic" src="imgs/09.jpg" alt="">
+      <img class="gallery-pic" src="imgs/10.jpg" alt="">
+      <img class="gallery-pic" src="imgs/11.jpg" alt="">
+      <img class="gallery-pic" src="imgs/12.jpg" alt="">
+      <img class="gallery-pic" src="imgs/13.jpg" alt="">
+    </div>
+  </div>
+
+  <div class="footer">
+    <p class="footer-left">
+      <a href="#" id="feedback-link">Feedback</a>
+      <a href="https://github.com/Team-WebFlight/WebFlight/issues/new" target="_blank">Issues</a>
+      <p id="star-icon">
+        <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js">
+        </script>
+        <a class="github-button" href="https://github.com/Team-WebFlight/webflight" data-style="mega" data-count-href="/Team-WebFlight/webflight/stargazers" data-count-api="/repos/Team-WebFlight/webflight#stargazers_count" data-count-aria-label="# stargazers on GitHub"
+          aria-label="Star Team-WebFlight/webflight on GitHub">Star</a>
+      </p>
+    </p>
+    <p class="footer-right">
+      Brought to you by Team WebFlight: <a href="https://github.com/CarolAG/" target="_blank">Carol</a>, <a href="https://github.com/coryc5/" target="_blank">Cory</a>, <a href="https://github.com/10000highfives/" target="_blank">Jared</a>, <a href="https://github.com/tbywong/"
+        target="_blank">Tiffany</a>
+    </p>
+
+  </div>
+
+  <div class="form">
+    <form method="POST" name="contact_form" action="https://formspree.io/tbywong@gmail.com">
+      <h2><center>We love feedback!</center></h2>
+      <div class="words">Name:</div>
+      <input type="text" name="name">
+      <div class="words">Email:</div>
+      <input type="text" name="_replyto">
+      <div class="words">Message: </div>
+      <textarea id="feedback_text" name="message"></textarea>
+      <br>
+      <input type="submit" value="Send" id="submit">
+      <input type="button" id="close" value="Close">
+    </form>
+  </div>
+</body>
+
+</html>
+
