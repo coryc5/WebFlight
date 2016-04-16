@@ -10,10 +10,9 @@ const createSeedObj = require('./lib/createSeedObj')
 const hashSeedObj = require('./lib/hashSeedObj')
 const writeSeedScript = require('./lib/writeSeedScript')
 const replaceHtml = require('./lib/replaceHtml')
-const addStatusBar = require('./lib/addStatusBar')
+// const addStatusBar = require('./lib/addStatusBar')
 const writeNewHtml = require('./lib/writeNewHtml')
 const startBots = require('./lib/startBots')
-const uncommentingEJS = require('./lib/uncommentingEJS')
 
 
 /**
@@ -36,15 +35,13 @@ function WebFlight (options, serverRoot) {
     this[key] = options[key]
   })
 
-  const fileNamesArr = Object.keys(this.routes).map((file) => {
-    return path.basename(this.routes[file])
-  })
+  const fileNamesArr = Object.keys(this.routes).map((file) => path.basename(this.routes[file]))
 
   // defaults
   this.wfPath = options.wfPath || path.join(serverRoot, '/wfPath')
   this.wfRoute = options.wfRoute || '/wfRoute'
   this.seedScript = options.seedScript || path.join(this.wfPath, 'js/wf-seed.js')
-  this.userCount = options.userCount || 5
+  this.userCount = options.userCount || 10
   this.statusBar = options.statusBar || true
 
   // non-configurables
@@ -70,27 +67,15 @@ function WebFlight (options, serverRoot) {
 }
 
 WebFlight.prototype.init = function () {
-  const htmlFiles = Object.keys(this.routes).map((route) => {
-    return this.routes[route]
-  })
+  const htmlFiles = Object.keys(this.routes).map((route) => this.routes[route])
   const htmlStrings = stringifyFiles(htmlFiles)
   const filesObj = createFilesObj(this.assetsPath, this.assetsRoute)
   const seedObj = createSeedObj(htmlStrings, filesObj)
 
-  if (this.statusBar) {
-    hashSeedObj(seedObj)
-    .then(writeSeedScript.bind(null, this.seedScript, this.siteUrl, this.stopCount))
-    .then(replaceHtml.bind(null, htmlStrings))
-    .then(addStatusBar.bind(null))
-    .then(uncommentingEJS.bind(null))
-    .then(writeNewHtml.bind(null, this.htmlOutput))
-  } else {
-    hashSeedObj(seedObj)
-    .then(writeSeedScript.bind(null, this.seedScript, this.siteUrl, this.stopCount))
-    .then(replaceHtml.bind(null, htmlStrings))
-    .then(uncommentingEJS.bind(null))
-    .then(writeNewHtml.bind(null, this.htmlOutput))
-  }
+  hashSeedObj(seedObj)
+  .then(writeSeedScript.bind(null, this.seedScript, this.siteUrl, this.stopCount))
+  .then(replaceHtml.bind(null, htmlStrings))
+  .then(writeNewHtml.bind(null, this.htmlOutput))
 }
 
 WebFlight.prototype.redirect = function (req, res, next) {
@@ -105,8 +90,8 @@ WebFlight.prototype.redirect = function (req, res, next) {
 
 WebFlight.prototype.start = function () {
   // TODO: check if these already exist
-  child_process.exec('export DISPLAY=\'0:99\'')
-  child_process.exec('Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &')
+  // child_process.exec('export DISPLAY=\'0:99\'')
+  // child_process.exec('Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &')
 
   startBots(this.seedScript)
 
